@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-sans antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-cyber-darker;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-cyber-accent rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-cyber-accent/80;
+}
+
+.glow {
+  @apply shadow-lg shadow-cyber-accent/20;
+}
+
+.glow-danger {
+  @apply shadow-lg shadow-cyber-danger/20;
+}
+
+.glow-success {
+  @apply shadow-lg shadow-cyber-success/20;
+}
+
+.tab-enter {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
