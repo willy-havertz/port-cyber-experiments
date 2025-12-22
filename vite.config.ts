@@ -7,6 +7,10 @@ export default defineConfig({
     port: 5173,
     open: true,
   },
+  preview: {
+    port: 4173,
+    host: "0.0.0.0",
+  },
   build: {
     chunkSizeWarningLimit: 1000,
   },
