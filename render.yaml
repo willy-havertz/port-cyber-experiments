@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: port-cyber-experiments
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run preview
+    envVars:
+      - key: NODE_ENV
+        value: production
+    staticSite:
+      sourceDir: dist
+      publishPath: /
