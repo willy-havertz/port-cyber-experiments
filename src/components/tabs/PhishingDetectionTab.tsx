@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play, CheckCircle, AlertTriangle } from "lucide-react";
+import { Play, CheckCircle } from "lucide-react";
 
 export default function PhishingDetectionTab() {
   const [running, setRunning] = useState(false);

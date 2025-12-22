@@ -30,12 +30,14 @@ After pushing to GitHub, Render will automatically detect and deploy changes.
 - **Preview Production Build:** `npm run preview`
 
 ### Technologies
+
 - React 19 + TypeScript
 - Vite (blazing fast bundler)
 - Tailwind CSS
 - Recharts for visualizations
 
 ### Features
+
 - Landing page showcasing all projects
 - 5 interactive project demonstrations
 - Network Security Assessment
@@ -49,6 +51,7 @@ After pushing to GitHub, Render will automatically detect and deploy changes.
 ## Environment Variables
 
 If needed, add to Render dashboard:
+
 ```
 NODE_ENV=production
 ```
@@ -58,6 +61,7 @@ NODE_ENV=production
 ## Support
 
 All projects are live and available on GitHub:
+
 - [Network Security](https://github.com/willy-havertz/port-cyber-network-security)
 - [Incident Response](https://github.com/willy-havertz/port-cyber-incident-response)
 - [Threat Intelligence](https://github.com/willy-havertz/port-cyber-threat-intel)
