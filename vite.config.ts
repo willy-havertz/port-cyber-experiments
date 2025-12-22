@@ -10,7 +10,7 @@ export default defineConfig({
   preview: {
     port: 4173,
     host: "0.0.0.0",
-    allowedHosts: ["port-cyber-experiments.onrender.com", "localhost"],
+    allowedHosts: "all",
   },
   build: {
     chunkSizeWarningLimit: 1000,
