@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import TabNavigation from './components/TabNavigation'
 import LandingPage from './components/LandingPage'
@@ -13,6 +13,14 @@ export type TabType = 'network' | 'incident' | 'threat' | 'code' | 'phishing' | 
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>(null)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const tabParam = params.get('tab')
+    if (tabParam && ['network', 'incident', 'threat', 'code', 'phishing'].includes(tabParam)) {
+      setActiveTab(tabParam as TabType)
+    }
+  }, [])
 
   const handleSelectProject = (tabId: string) => {
     setActiveTab(tabId as TabType)
@@ -39,7 +47,6 @@ export default function App() {
     <div className="min-h-screen bg-cyber-darker flex flex-col">
       {activeTab && <Header onBack={() => setActiveTab(null)} />}
       {activeTab && <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />}
-      
       <main className="flex-1">
         <div className="tab-enter">
           {renderTab()}
