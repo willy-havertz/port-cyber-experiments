@@ -124,13 +124,13 @@ Remediation Time Estimate: 2-3 days
             GitHub Repository
           </a>
           <a
-            href="https://port-cyber-scanner.onrender.com"
+            href="https://port-cyber-scanner.onrender.com/docs"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded transition"
           >
             <Lock className="w-4 h-4" />
-            Live Demo
+            API Docs
           </a>
         </div>
       </div>
