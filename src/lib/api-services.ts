@@ -33,9 +33,7 @@ export interface ScanResult {
 
 export async function scanTarget(request: ScanRequest): Promise<ScanResult> {
   try {
-    // Check if we have a valid token (mock for demo)
     const token = localStorage.getItem("scanner_token");
-
     const response = await fetch(`${BACKEND_URL}/api/scanner/scan`, {
       method: "POST",
       headers: {
@@ -51,7 +49,6 @@ export async function scanTarget(request: ScanRequest): Promise<ScanResult> {
 
     return await response.json();
   } catch (error) {
-    // Fallback to mock data if backend unavailable
     console.warn("Backend scanner unavailable, using mock data", error);
     return getMockScanResult(request.target_url);
   }
@@ -66,15 +63,13 @@ function getMockScanResult(target: string): ScanResult {
         type: "Missing CSP Header",
         severity: "medium",
         description: "Content-Security-Policy header not set",
-        remediation:
-          "Add CSP header: Content-Security-Policy: default-src 'self'",
+        remediation: "Add CSP header: Content-Security-Policy: default-src 'self'",
       },
       {
         type: "Missing HSTS Header",
         severity: "medium",
         description: "HTTP Strict-Transport-Security not configured",
-        remediation:
-          "Add HSTS: Strict-Transport-Security: max-age=31536000; includeSubDomains",
+        remediation: "Add HSTS: Strict-Transport-Security: max-age=31536000; includeSubDomains",
       },
       {
         type: "Outdated TLS Version",
@@ -98,6 +93,7 @@ export interface PortInfo {
   state: "open" | "closed" | "filtered";
   service: string;
   version?: string;
+  protocol?: string;
 }
 
 export interface NetworkScanResult {
@@ -105,11 +101,12 @@ export interface NetworkScanResult {
   ports: PortInfo[];
   timestamp: string;
   os_detection?: string;
+  critical_count?: number;
+  high_count?: number;
+  medium_count?: number;
 }
 
-export async function scanNetworkTarget(
-  target: string
-): Promise<NetworkScanResult> {
+export async function scanNetworkTarget(target: string): Promise<NetworkScanResult> {
   try {
     const response = await fetch(`${BACKEND_URL}/api/scanner/network-scan`, {
       method: "POST",
@@ -137,19 +134,24 @@ function getMockNetworkScanResult(host: string): NetworkScanResult {
         state: "open",
         service: "http",
         version: "Apache 2.4.41",
+        protocol: "tcp",
       },
-      { port: 443, state: "open", service: "https" },
+      { port: 443, state: "open", service: "https", protocol: "tcp" },
       {
         port: 22,
         state: "open",
         service: "ssh",
         version: "OpenSSH 7.4",
+        protocol: "tcp",
       },
-      { port: 25, state: "filtered", service: "smtp" },
-      { port: 3306, state: "closed", service: "mysql" },
+      { port: 25, state: "filtered", service: "smtp", protocol: "tcp" },
+      { port: 3306, state: "closed", service: "mysql", protocol: "tcp" },
     ],
     timestamp: new Date().toISOString(),
     os_detection: "Linux 4.15 - 5.6",
+    critical_count: 1,
+    high_count: 2,
+    medium_count: 1,
   };
 }
 
@@ -166,15 +168,12 @@ export interface CVEData {
   affected_product?: string;
 }
 
-export async function fetchRecentCVEs(
-  limit: number = 10
-): Promise<CVEData[]> {
+export async function fetchRecentCVEs(limit: number = 10): Promise<CVEData[]> {
   try {
-    // NVD API is free but has rate limits
     const response = await fetch(
       `${NVD_API}?resultsPerPage=${limit}&orderBy=published&sortOrder=desc`,
       {
-        headers: { "api-key": "" }, // NVD doesn't require key for basic queries
+        headers: { "api-key": "" },
       }
     );
 
@@ -249,10 +248,11 @@ function getMockCVEData(): CVEData[] {
 export interface CodeVulnerability {
   type: string;
   severity: "critical" | "high" | "medium" | "low";
-  line?: number;
+  line_number?: number;
   description: string;
   cwe?: string;
   remediation: string;
+  file_path?: string;
 }
 
 export interface CodeScanResult {
@@ -260,13 +260,10 @@ export interface CodeScanResult {
   language: string;
   vulnerabilities: CodeVulnerability[];
   timestamp: string;
-  score: number; // 0-100
+  score: number;
 }
 
-export async function analyzeCode(
-  repoUrl: string,
-  language: string = "python"
-): Promise<CodeScanResult> {
+export async function analyzeCode(repoUrl: string, language: string = "python"): Promise<CodeScanResult> {
   try {
     const response = await fetch(`${BACKEND_URL}/api/code-review/analyze`, {
       method: "POST",
@@ -293,23 +290,26 @@ function getMockCodeScanResult(file: string): CodeScanResult {
       {
         type: "SQL Injection",
         severity: "critical",
-        line: 45,
-        description: 'User input directly concatenated in SQL query: `query = f"SELECT * FROM users WHERE id = {user_id}"`',
+        line_number: 45,
+        file_path: "src/auth/login.py",
+        description: 'User input directly concatenated in SQL query',
         cwe: "CWE-89",
-        remediation: "Use parameterized queries: cursor.execute('SELECT * FROM users WHERE id = ?', (user_id,))",
+        remediation: "Use parameterized queries",
       },
       {
         type: "Hardcoded Secrets",
         severity: "critical",
-        line: 12,
-        description: 'API key hardcoded in source: `API_KEY = "sk-1234567890"`',
+        line_number: 12,
+        file_path: "src/utils/secrets.js",
+        description: 'API key hardcoded in source',
         cwe: "CWE-798",
         remediation: "Use environment variables or secrets manager",
       },
       {
         type: "Insecure Deserialization",
         severity: "high",
-        line: 78,
+        line_number: 78,
+        file_path: "src/core/serializer.py",
         description: "Using pickle to deserialize untrusted data",
         cwe: "CWE-502",
         remediation: "Use JSON or other safe serialization formats",
@@ -317,7 +317,8 @@ function getMockCodeScanResult(file: string): CodeScanResult {
       {
         type: "Missing Input Validation",
         severity: "high",
-        line: 102,
+        line_number: 102,
+        file_path: "src/api/upload.py",
         description: "User input not validated before use in file operations",
         cwe: "CWE-20",
         remediation: "Validate and sanitize all user inputs",
@@ -335,23 +336,21 @@ function getMockCodeScanResult(file: string): CodeScanResult {
 export interface PhishingAnalysis {
   email: string;
   is_phishing: boolean;
-  confidence: number; // 0-100
+  confidence: number;
   risk_factors: string[];
   timestamp: string;
+  analysis_summary?: string;
+  suspicious_urls?: string[];
+  spoofing_indicators?: string[];
 }
 
-export async function analyzePhishingRisk(
-  email: string
-): Promise<PhishingAnalysis> {
+export async function analyzePhishingRisk(email: string): Promise<PhishingAnalysis> {
   try {
-    const response = await fetch(
-      `${BACKEND_URL}/api/phishing/predict`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      }
-    );
+    const response = await fetch(`${BACKEND_URL}/api/phishing/predict`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
 
     if (!response.ok) {
       throw new Error("Phishing analysis failed");
@@ -365,30 +364,23 @@ export async function analyzePhishingRisk(
 }
 
 function getMockPhishingAnalysis(email: string): PhishingAnalysis {
-  const isPhishing =
-    email.includes("urgent") ||
-    email.includes("verify") ||
-    email.includes("confirm");
+  const isPhishing = email.includes("urgent") || email.includes("verify") || email.includes("confirm");
 
   return {
     email,
     is_phishing: isPhishing,
-    confidence: isPhishing ? 85 : 12,
+    confidence: isPhishing ? 0.85 : 0.12,
     risk_factors: isPhishing
-      ? [
-          "Urgency language detected",
-          "Suspicious sender domain",
-          "Request for personal information",
-          "Shortened URLs present",
-        ]
+      ? ["Urgency language detected", "Suspicious sender domain", "Request for personal information"]
       : ["No suspicious patterns detected"],
+    analysis_summary: isPhishing
+      ? "Email exhibits multiple phishing indicators including urgency language and suspicious URLs"
+      : "Email appears to be from legitimate source with no phishing indicators",
+    suspicious_urls: isPhishing ? ["https://secure-paypal-verify.click/login"] : [],
+    spoofing_indicators: isPhishing ? ["Domain homograph attack", "Spoofed PayPal branding"] : [],
     timestamp: new Date().toISOString(),
   };
 }
-
-// ============================================================================
-// THREAT INTEL - SHODAN lookups (would require API key)
-// ============================================================================
 
 export interface ShodanResult {
   ip: string;
@@ -400,8 +392,6 @@ export interface ShodanResult {
 }
 
 export async function lookupIPOnShodan(ip: string): Promise<ShodanResult> {
-  // SHODAN requires API key - showing mock implementation
-  // In production: const apiKey = process.env.REACT_APP_SHODAN_API_KEY;
   console.warn("SHODAN API requires key - using mock data");
   return getMockShodanResult(ip);
 }
