@@ -10,7 +10,8 @@ export default defineConfig({
   preview: {
     port: 4173,
     host: "0.0.0.0",
-    allowedHosts: "all",
+    // allow all hosts in preview (true is accepted by vite types)
+    allowedHosts: true,
   },
   build: {
     chunkSizeWarningLimit: 1000,
