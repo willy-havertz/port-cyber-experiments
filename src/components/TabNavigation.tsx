@@ -1,5 +1,5 @@
 import { TabType } from "../App";
-import { Network, AlertTriangle, Radar, Code2, Mail } from "lucide-react";
+import { Network, AlertTriangle, Radar, Code2, Mail, Shield } from "lucide-react";
 
 interface TabNavigationProps {
   activeTab: TabType;
@@ -16,6 +16,7 @@ const tabs = [
   { id: "threat" as TabType, label: "Threat Intelligence", icon: Radar },
   { id: "code" as TabType, label: "Code Review", icon: Code2 },
   { id: "phishing" as TabType, label: "Phishing Detection", icon: Mail },
+  { id: "scanner" as TabType, label: "Vulnerability Scanner", icon: Shield },
 ];
 
 export default function TabNavigation({

@@ -90,6 +90,21 @@ export default function LandingPage({
       ],
       repo: "https://github.com/willy-havertz/port-cyber-phishing-detection",
     },
+    {
+      id: "scanner",
+      name: "Automated Vulnerability Scanner",
+      description:
+        "Production-ready FastAPI scanner with SSRF-safe IP validation, security header audits, XSS/SQLi detection, CORS analysis, per-user rate limiting, and Docker deployment.",
+      language: "Python",
+      features: [
+        "SSRF Protection",
+        "Header Audits",
+        "XSS/SQLi Detection",
+        "CORS Analysis",
+        "Rate Limiting",
+      ],
+      repo: "https://github.com/willy-havertz/port-cyber-scanner",
+    },
   ];
 
   return (
