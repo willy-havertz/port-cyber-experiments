@@ -1,11 +1,23 @@
 import { useState } from "react";
 import { Play, Download, Shield, Zap, Lock } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from "recharts";
 
 export default function ScannerTab() {
   const [running, setRunning] = useState(false);
   const [results, setResults] = useState(false);
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "scan" | "report">("overview");
+  const [activeSubTab, setActiveSubTab] = useState<
+    "overview" | "scan" | "report"
+  >("overview");
 
   const vulnerabilityData = [
     { name: "SSRF", severity: 9, color: "#ff0055" },
@@ -55,7 +67,7 @@ RECOMMENDATIONS:
 
 Remediation Time Estimate: 2-3 days
     `;
-    
+
     const blob = new Blob([report], { type: "text/plain" });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -74,8 +86,9 @@ Remediation Time Estimate: 2-3 days
               Automated Vulnerability Scanner
             </h2>
             <p className="text-gray-400 mb-4">
-              Production-ready FastAPI scanner with SSRF-safe IP validation, security header audits, 
-              XSS/SQLi detection, CORS analysis, per-user rate limiting, and Docker deployment.
+              Production-ready FastAPI scanner with SSRF-safe IP validation,
+              security header audits, XSS/SQLi detection, CORS analysis,
+              per-user rate limiting, and Docker deployment.
             </p>
           </div>
           <Shield className="w-12 h-12 text-cyan-500 flex-shrink-0" />
@@ -101,7 +114,7 @@ Remediation Time Estimate: 2-3 days
         </div>
 
         <div className="flex gap-4 mb-4">
-          <a 
+          <a
             href="https://github.com/willy-havertz/port-cyber-scanner"
             target="_blank"
             rel="noopener noreferrer"
@@ -110,7 +123,7 @@ Remediation Time Estimate: 2-3 days
             <Zap className="w-4 h-4" />
             GitHub Repository
           </a>
-          <a 
+          <a
             href="https://port-cyber-scanner.onrender.com"
             target="_blank"
             rel="noopener noreferrer"
@@ -146,41 +159,71 @@ Remediation Time Estimate: 2-3 days
             <h3 className="text-xl font-bold text-white mb-4">Key Features</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">🔒 SSRF Protection</p>
-                <p className="text-gray-400 text-sm">Safe IP validation with whitelist support</p>
+                <p className="text-cyan-400 font-semibold mb-2">
+                  🔒 SSRF Protection
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Safe IP validation with whitelist support
+                </p>
               </div>
               <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">📊 Header Audits</p>
-                <p className="text-gray-400 text-sm">Checks for security headers (CSP, HSTS, etc)</p>
+                <p className="text-cyan-400 font-semibold mb-2">
+                  📊 Header Audits
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Checks for security headers (CSP, HSTS, etc)
+                </p>
               </div>
               <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">⚡ XSS/SQLi Detection</p>
-                <p className="text-gray-400 text-sm">Pattern matching & heuristic analysis</p>
+                <p className="text-cyan-400 font-semibold mb-2">
+                  ⚡ XSS/SQLi Detection
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Pattern matching & heuristic analysis
+                </p>
               </div>
               <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">🌐 CORS Analysis</p>
-                <p className="text-gray-400 text-sm">Identifies overly permissive CORS policies</p>
+                <p className="text-cyan-400 font-semibold mb-2">
+                  🌐 CORS Analysis
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Identifies overly permissive CORS policies
+                </p>
               </div>
               <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">⏱️ Rate Limiting</p>
-                <p className="text-gray-400 text-sm">Per-user limits with Redis backend</p>
+                <p className="text-cyan-400 font-semibold mb-2">
+                  ⏱️ Rate Limiting
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Per-user limits with Redis backend
+                </p>
               </div>
               <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">🐳 Docker Ready</p>
-                <p className="text-gray-400 text-sm">Full containerization for production</p>
+                <p className="text-cyan-400 font-semibold mb-2">
+                  🐳 Docker Ready
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Full containerization for production
+                </p>
               </div>
             </div>
           </div>
 
           <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
-            <h3 className="text-xl font-bold text-white mb-4">Vulnerability Distribution</h3>
+            <h3 className="text-xl font-bold text-white mb-4">
+              Vulnerability Distribution
+            </h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={vulnerabilityData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                 <XAxis dataKey="name" stroke="#999" />
                 <YAxis stroke="#999" />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: "#1a1a2e", border: "1px solid #0ff", color: "#fff" }}
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1a1a2e",
+                    border: "1px solid #0ff",
+                    color: "#fff",
+                  }}
                   cursor={{ fill: "rgba(0, 255, 255, 0.1)" }}
                 />
                 <Bar dataKey="severity" fill="#ff0055" />
@@ -194,22 +237,31 @@ Remediation Time Estimate: 2-3 days
       {activeSubTab === "scan" && (
         <div className="space-y-6">
           <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
-            <h3 className="text-xl font-bold text-white mb-4">Run Security Scan</h3>
-            
+            <h3 className="text-xl font-bold text-white mb-4">
+              Run Security Scan
+            </h3>
+
             <div className="space-y-4 mb-6">
               <div>
-                <label className="block text-gray-400 text-sm mb-2">Target URL</label>
-                <input 
-                  type="url" 
-                  placeholder="https://example.com" 
+                <label className="block text-gray-400 text-sm mb-2">
+                  Target URL
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://example.com"
                   disabled={running}
                   className="w-full bg-cyber-border text-white px-4 py-2 rounded border border-cyber-border focus:border-cyan-400 outline-none disabled:opacity-50"
                 />
               </div>
-              
+
               <div>
-                <label className="block text-gray-400 text-sm mb-2">Scan Type</label>
-                <select disabled={running} className="w-full bg-cyber-border text-white px-4 py-2 rounded border border-cyber-border focus:border-cyan-400 outline-none disabled:opacity-50">
+                <label className="block text-gray-400 text-sm mb-2">
+                  Scan Type
+                </label>
+                <select
+                  disabled={running}
+                  className="w-full bg-cyber-border text-white px-4 py-2 rounded border border-cyber-border focus:border-cyan-400 outline-none disabled:opacity-50"
+                >
                   <option>Full Scan (XSS, SQLi, CORS, Headers)</option>
                   <option>Quick Scan (Headers only)</option>
                   <option>SSRF Detection Only</option>
@@ -235,11 +287,21 @@ Remediation Time Estimate: 2-3 days
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                   <XAxis dataKey="time" stroke="#999" />
                   <YAxis stroke="#999" domain={[0, 100]} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: "#1a1a2e", border: "1px solid #0ff", color: "#fff" }}
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#1a1a2e",
+                      border: "1px solid #0ff",
+                      color: "#fff",
+                    }}
                     cursor={{ fill: "rgba(0, 255, 255, 0.1)" }}
                   />
-                  <Line type="monotone" dataKey="progress" stroke="#00ff88" strokeWidth={2} dot={false} />
+                  <Line
+                    type="monotone"
+                    dataKey="progress"
+                    stroke="#00ff88"
+                    strokeWidth={2}
+                    dot={false}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -247,7 +309,9 @@ Remediation Time Estimate: 2-3 days
 
           {results && (
             <div className="bg-cyber-dark border border-cyan-400 rounded-lg p-6">
-              <h4 className="text-white font-semibold mb-4">✅ Scan Complete</h4>
+              <h4 className="text-white font-semibold mb-4">
+                ✅ Scan Complete
+              </h4>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="bg-cyber-border rounded p-4">
                   <p className="text-gray-400 text-sm">Critical Issues</p>
@@ -281,9 +345,11 @@ Remediation Time Estimate: 2-3 days
       {/* Report Tab */}
       {activeSubTab === "report" && (
         <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
-          <h3 className="text-xl font-bold text-white mb-4">Sample Vulnerability Report</h3>
+          <h3 className="text-xl font-bold text-white mb-4">
+            Sample Vulnerability Report
+          </h3>
           <pre className="bg-cyber-border text-green-400 p-4 rounded text-xs overflow-auto max-h-96 font-mono">
-{`=== Automated Vulnerability Scanner Report ===
+            {`=== Automated Vulnerability Scanner Report ===
 Scan Date: 2024-12-26T10:30:00Z
 Target: https://example.com
 

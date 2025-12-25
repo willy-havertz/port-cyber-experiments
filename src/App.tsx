@@ -27,7 +27,9 @@ export default function App() {
     const tabParam = params.get("tab");
     if (
       tabParam &&
-      ["network", "incident", "threat", "code", "phishing", "scanner"].includes(tabParam)
+      ["network", "incident", "threat", "code", "phishing", "scanner"].includes(
+        tabParam
+      )
     ) {
       setActiveTab(tabParam as TabType);
     }
@@ -57,7 +59,14 @@ export default function App() {
       const tabParam = params.get("tab");
       if (
         tabParam &&
-        ["network", "incident", "threat", "code", "phishing", "scanner"].includes(tabParam)
+        [
+          "network",
+          "incident",
+          "threat",
+          "code",
+          "phishing",
+          "scanner",
+        ].includes(tabParam)
       ) {
         setActiveTab(tabParam as TabType);
       } else {
