@@ -151,6 +151,21 @@ export default function LandingPage({
       ],
       repo: "https://github.com/willy-havertz/port-cyber-experiments",
     },
+    {
+      id: "security-tools",
+      name: "Security Tools Suite",
+      description:
+        "Comprehensive 3-in-1 suite: Advanced Web Scan (TLS/headers/cookies), API Audit (endpoint testing), CVE Intelligence (NVD). All with fallback sample data.",
+      language: "Python",
+      features: [
+        "Web Scan (TLS/Headers)",
+        "API Endpoint Audit",
+        "CVE Database Search",
+        "Mock Data Fallback",
+        "JSON Export",
+      ],
+      repo: "https://github.com/willy-havertz/port-cyber",
+    },
   ];
 
   return (
