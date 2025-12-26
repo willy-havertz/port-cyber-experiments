@@ -106,6 +106,22 @@ export default function LandingPage({
       repo: "https://github.com/willy-havertz/port-cyber-scanner",
     },
     {
+      id: "api-audit",
+      name: "API Security Audit Tool",
+      description:
+        "Comprehensive API security testing platform. Tests endpoint authentication, HTTP/HTTPS enforcement, CORS configuration, excessive HTTP methods, rate limiting headers, and stack trace leakage detection.",
+      language: "TypeScript",
+      features: [
+        "CORS Testing",
+        "HTTP Methods",
+        "Auth Validation",
+        "Rate Limiting",
+        "Endpoint Probing",
+      ],
+      repo: "https://github.com/willy-havertz/port-cyber-experiments",
+    },
+
+    {
       id: "password",
       name: "Password Strength Analyzer",
       description:
