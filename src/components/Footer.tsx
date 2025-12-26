@@ -55,7 +55,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-cyber-border pt-6 text-center text-gray-500 text-sm">
-          <p>Cybersecurity Projects © 2025 | Built with React + Vite</p>
+          <p>Cybersecurity Projects © 2025 | wiltord</p>
         </div>
       </div>
     </footer>

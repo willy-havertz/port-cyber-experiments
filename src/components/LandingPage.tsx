@@ -238,7 +238,7 @@ export default function LandingPage({
       {/* Footer */}
       <footer className="border-t border-cyber-border bg-cyber-dark">
         <div className="container mx-auto px-4 py-8 text-center text-gray-500 text-sm">
-          <p>Cybersecurity Projects © 2025 | Built with React + Vite</p>
+          <p>Cybersecurity Projects © 2025 | wiltord</p>
           <p className="mt-2">
             All demonstrations use sample data for educational purposes
           </p>
