@@ -105,6 +105,36 @@ export default function LandingPage({
       ],
       repo: "https://github.com/willy-havertz/port-cyber-scanner",
     },
+    {
+      id: "password",
+      name: "Password Strength Analyzer",
+      description:
+        "Real-world password security analysis using HaveIBeenPwned breach database. Calculates entropy, detects patterns, estimates crack time, and supports batch analysis with CSV export.",
+      language: "TypeScript",
+      features: [
+        "Breach Database",
+        "Entropy Calculation",
+        "Pattern Detection",
+        "Batch Analysis",
+        "CSV Export",
+      ],
+      repo: "https://github.com/willy-havertz/port-cyber-experiments",
+    },
+    {
+      id: "certificate",
+      name: "SSL/TLS Certificate Analyzer",
+      description:
+        "Comprehensive SSL/TLS security scanner using SSL Labs API. Validates certificates, checks chains, detects weak ciphers (RC4, 3DES), identifies vulnerabilities (BEAST, POODLE), and provides PCI-DSS compliance indicators.",
+      language: "TypeScript",
+      features: [
+        "SSL Labs API",
+        "Chain Validation",
+        "Weak Cipher Detection",
+        "Vulnerability Scanning",
+        "Compliance Checks",
+      ],
+      repo: "https://github.com/willy-havertz/port-cyber-experiments",
+    },
   ];
 
   return (
@@ -112,15 +142,12 @@ export default function LandingPage({
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-cyber-dark via-cyber-darker to-cyber-darker py-20 border-b border-cyber-border">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-5xl font-bold text-white mb-4">
-              Cybersecurity Projects
+              Cybersecurity
+              <span className="text-cyber-accent"> Projects</span>
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Live demonstrations of production-grade security tools and
-              analysis engines
-            </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-400 text-lg mb-8">
               Interactive dashboards showcasing real-world security
               implementations
             </p>
