@@ -12,6 +12,7 @@ import ScannerTab from "./components/tabs/ScannerTab";
 import PasswordAnalyzerTab from "./components/tabs/PasswordAnalyzerTab";
 import CertificateAnalyzerTab from "./components/tabs/CertificateAnalyzerTab";
 import APIAuditTab from "./components/tabs/APIAuditTab";
+import SecurityToolsTab from "./components/tabs/SecurityToolsTab";
 import Footer from "./components/Footer";
 
 export type TabType =
@@ -24,6 +25,7 @@ export type TabType =
   | "password"
   | "certificate"
   | "api-audit"
+  | "security-tools"
   | null;
 
 export default function App() {
@@ -34,9 +36,18 @@ export default function App() {
     const tabParam = params.get("tab");
     if (
       tabParam &&
-      ["network", "incident", "threat", "code", "phishing", "scanner", "password", "certificate", "api-audit"].includes(
-        tabParam
-      )
+      [
+        "network",
+        "incident",
+        "threat",
+        "code",
+        "phishing",
+        "scanner",
+        "password",
+        "certificate",
+        "api-audit",
+        "security-tools",
+      ].includes(tabParam)
     ) {
       setActiveTab(tabParam as TabType);
     }
@@ -76,6 +87,7 @@ export default function App() {
           "password",
           "certificate",
           "api-audit",
+          "security-tools",
         ].includes(tabParam)
       ) {
         setActiveTab(tabParam as TabType);
@@ -112,6 +124,8 @@ export default function App() {
         return <CertificateAnalyzerTab />;
       case "api-audit":
         return <APIAuditTab />;
+      case "security-tools":
+        return <SecurityToolsTab />;
       default:
         return <LandingPage onSelectProject={handleSelectProject} />;
     }
