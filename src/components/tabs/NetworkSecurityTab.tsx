@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Play } from "lucide-react";
+import { toast } from "sonner";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { scanNetworkTarget, NetworkScanResult } from "../../lib/api-services";
 
@@ -33,13 +34,43 @@ export default function NetworkSecurityTab() {
       ];
 
   const handleRunScan = async () => {
+    if (!targetHost.trim()) {
+      toast.error("Target host required", {
+        description: "Enter a hostname or IP to scan",
+      });
+      return;
+    }
+
     setRunning(true);
     setError("");
     try {
+      const toastId = toast.loading(`Scanning ${targetHost}...`);
       const result = await scanNetworkTarget(targetHost);
+      toast.dismiss(toastId);
+
+      const critical = result.critical_count || 0;
+      const high = result.high_count || 0;
+
+      if (critical > 0) {
+        toast.error(`Critical exposures: ${critical}`, {
+          description: `${high} high severity issues also detected`,
+        });
+      } else if (high > 0) {
+        toast.warning(`High severity issues: ${high}`, {
+          description: "Prioritize remediation",
+        });
+      } else {
+        toast.success("Scan complete", {
+          description: "No critical/high findings",
+        });
+      }
+
       setScanResults(result);
       setResults(true);
     } catch (err) {
+      toast.error("Network scan failed", {
+        description: err instanceof Error ? err.message : "Unknown error",
+      });
       setError(err instanceof Error ? err.message : "Scan failed");
       setResults(true);
     } finally {

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Play, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 import { analyzeCode, CodeScanResult } from "../../lib/api-services";
 
 export default function CodeReviewTab() {
@@ -11,13 +12,49 @@ export default function CodeReviewTab() {
   const [error, setError] = useState("");
 
   const handleRunReview = async () => {
+    if (!repoUrl.trim()) {
+      toast.error("Repository URL required", {
+        description: "Enter a valid GitHub repository URL",
+      });
+      return;
+    }
+
     setRunning(true);
     setError("");
     try {
+      const toastId = toast.loading(
+        "Scanning repository for vulnerabilities..."
+      );
       const result = await analyzeCode(repoUrl, language);
+      toast.dismiss(toastId);
+
+      const critical = result.vulnerabilities.filter(
+        (v) => v.severity === "critical"
+      ).length;
+      const high = result.vulnerabilities.filter(
+        (v) => v.severity === "high"
+      ).length;
+
+      if (critical > 0) {
+        toast.error(`Critical findings: ${critical}`, {
+          description: `${high} high severity issues also detected`,
+        });
+      } else if (high > 0) {
+        toast.warning(`High severity findings: ${high}`, {
+          description: "Review and remediate soon",
+        });
+      } else {
+        toast.success("Scan complete", {
+          description: "No critical/high issues detected",
+        });
+      }
+
       setScanResults(result);
       setResults(true);
     } catch (err) {
+      toast.error("Scan failed", {
+        description: err instanceof Error ? err.message : "Unknown error",
+      });
       setError(err instanceof Error ? err.message : "Scan failed");
       setResults(true);
     } finally {
@@ -25,16 +62,26 @@ export default function CodeReviewTab() {
     }
   };
 
-  const criticalCount = scanResults?.vulnerabilities.filter((v) => v.severity === "critical").length || 0;
-  const highCount = scanResults?.vulnerabilities.filter((v) => v.severity === "high").length || 0;
-  const mediumCount = scanResults?.vulnerabilities.filter((v) => v.severity === "medium").length || 0;
+  const criticalCount =
+    scanResults?.vulnerabilities.filter((v) => v.severity === "critical")
+      .length || 0;
+  const highCount =
+    scanResults?.vulnerabilities.filter((v) => v.severity === "high").length ||
+    0;
+  const mediumCount =
+    scanResults?.vulnerabilities.filter((v) => v.severity === "medium")
+      .length || 0;
 
   return (
     <div className="space-y-6">
       <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-white mb-2">Secure Code Review</h2>
+        <h2 className="text-2xl font-bold text-white mb-2">
+          Secure Code Review
+        </h2>
         <p className="text-gray-400 mb-4">
-          Static Application Security Testing (SAST) scanner supporting multiple programming languages. Detects vulnerability patterns with OWASP/CWE mappings.
+          Static Application Security Testing (SAST) scanner supporting multiple
+          programming languages. Detects vulnerability patterns with OWASP/CWE
+          mappings.
         </p>
 
         <div className="grid grid-cols-3 gap-4 mb-6 text-sm">
@@ -54,7 +101,9 @@ export default function CodeReviewTab() {
 
         <div className="space-y-3 mb-4">
           <div>
-            <label className="block text-gray-400 text-sm mb-2">GitHub Repository URL</label>
+            <label className="block text-gray-400 text-sm mb-2">
+              GitHub Repository URL
+            </label>
             <input
               type="text"
               value={repoUrl}
@@ -64,7 +113,9 @@ export default function CodeReviewTab() {
             />
           </div>
           <div>
-            <label className="block text-gray-400 text-sm mb-2">Primary Language</label>
+            <label className="block text-gray-400 text-sm mb-2">
+              Primary Language
+            </label>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
@@ -108,34 +159,61 @@ export default function CodeReviewTab() {
               <p className="text-gray-400 text-sm">High</p>
             </div>
             <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-4">
-              <p className="text-yellow-400 text-2xl font-bold">{mediumCount}</p>
+              <p className="text-yellow-400 text-2xl font-bold">
+                {mediumCount}
+              </p>
               <p className="text-gray-400 text-sm">Medium</p>
             </div>
             <div className="bg-cyan-900/20 border border-cyan-700 rounded-lg p-4">
-              <p className="text-cyan-400 text-2xl font-bold">{scanResults.vulnerabilities.length}</p>
+              <p className="text-cyan-400 text-2xl font-bold">
+                {scanResults.vulnerabilities.length}
+              </p>
               <p className="text-gray-400 text-sm">Total Issues</p>
             </div>
           </div>
 
           <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-white">Vulnerability Findings</h3>
+            <h3 className="text-lg font-semibold text-white">
+              Vulnerability Findings
+            </h3>
 
             <div className="space-y-3 max-h-96 overflow-y-auto">
               {scanResults.vulnerabilities.slice(0, 6).map((vuln, idx) => {
-                const bgColor = vuln.severity === "critical" ? "border-l-red-500 bg-red-900/20" : vuln.severity === "high" ? "border-l-orange-500 bg-orange-900/20" : "border-l-yellow-500 bg-yellow-900/20";
-                const textColor = vuln.severity === "critical" ? "text-red-500" : vuln.severity === "high" ? "text-orange-500" : "text-yellow-500";
+                const bgColor =
+                  vuln.severity === "critical"
+                    ? "border-l-red-500 bg-red-900/20"
+                    : vuln.severity === "high"
+                    ? "border-l-orange-500 bg-orange-900/20"
+                    : "border-l-yellow-500 bg-yellow-900/20";
+                const textColor =
+                  vuln.severity === "critical"
+                    ? "text-red-500"
+                    : vuln.severity === "high"
+                    ? "text-orange-500"
+                    : "text-yellow-500";
                 return (
-                  <div key={idx} className={`${bgColor} border-l-4 rounded p-4`}>
+                  <div
+                    key={idx}
+                    className={`${bgColor} border-l-4 rounded p-4`}
+                  >
                     <div className="flex items-start gap-2 mb-2">
-                      <AlertCircle className={`w-4 h-4 ${textColor} mt-1 flex-shrink-0`} />
+                      <AlertCircle
+                        className={`w-4 h-4 ${textColor} mt-1 flex-shrink-0`}
+                      />
                       <div className="flex-1">
                         <p className="text-white font-semibold">{vuln.type}</p>
-                        <p className="text-gray-400 text-xs">{vuln.file_path}:{vuln.line_number}</p>
+                        <p className="text-gray-400 text-xs">
+                          {vuln.file_path}:{vuln.line_number}
+                        </p>
                       </div>
-                      <span className="text-gray-300 font-bold text-sm">{vuln.severity}</span>
+                      <span className="text-gray-300 font-bold text-sm">
+                        {vuln.severity}
+                      </span>
                     </div>
                     <p className="text-gray-300 text-sm">{vuln.description}</p>
-                    <p className="text-gray-500 text-xs mt-1">{vuln.cwe} • {vuln.remediation}</p>
+                    <p className="text-gray-500 text-xs mt-1">
+                      {vuln.cwe} • {vuln.remediation}
+                    </p>
                   </div>
                 );
               })}

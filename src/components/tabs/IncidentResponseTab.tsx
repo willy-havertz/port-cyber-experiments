@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { Play, Clock } from "lucide-react";
+import { toast } from "sonner";
 
 export default function IncidentResponseTab() {
   const [running, setRunning] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
 
   const handleRunScenario = () => {
+    const toastId = toast.loading("Executing incident response playbook...");
     setRunning(true);
     setTimeout(() => {
       setShowTimeline(true);
       setRunning(false);
+      toast.dismiss(toastId);
+      toast.success("Playbook executed", {
+        description: "Review timeline for phase outcomes",
+      });
     }, 1500);
   };
 
