@@ -29,6 +29,8 @@ export interface ScanResult {
   scan_type: string;
   timestamp: string;
   scan_duration?: number;
+  // Indicates the backend was unavailable and mock data was returned
+  using_mock?: boolean;
 }
 
 export async function scanTarget(request: ScanRequest): Promise<ScanResult> {
@@ -50,26 +52,33 @@ export async function scanTarget(request: ScanRequest): Promise<ScanResult> {
     return await response.json();
   } catch (error) {
     console.warn("Backend scanner unavailable, using mock data", error);
-    return getMockScanResult(request.target_url);
+    return getMockScanResult(request.target_url, true);
   }
 }
 
-function getMockScanResult(target: string): ScanResult {
-  return {
-    target,
-    status: "success",
-    vulnerabilities: [
+function getMockScanResult(
+  target: string,
+  usingMock: boolean = false
+): ScanResult {
+  // Create a simple deterministic hash to vary mock output by target
+  const hash =
+    Array.from(target).reduce((acc, ch) => acc + ch.charCodeAt(0), 0) % 3;
+
+  const variants: Vulnerability[][] = [
+    [
       {
         type: "Missing CSP Header",
         severity: "medium",
         description: "Content-Security-Policy header not set",
-        remediation: "Add CSP header: Content-Security-Policy: default-src 'self'",
+        remediation:
+          "Add CSP header: Content-Security-Policy: default-src 'self'",
       },
       {
         type: "Missing HSTS Header",
         severity: "medium",
         description: "HTTP Strict-Transport-Security not configured",
-        remediation: "Add HSTS: Strict-Transport-Security: max-age=31536000; includeSubDomains",
+        remediation:
+          "Add HSTS: Strict-Transport-Security: max-age=31536000; includeSubDomains",
       },
       {
         type: "Outdated TLS Version",
@@ -78,9 +87,60 @@ function getMockScanResult(target: string): ScanResult {
         remediation: "Disable TLS versions below 1.2",
       },
     ],
+    [
+      {
+        type: "Reflected XSS",
+        severity: "high",
+        description:
+          "User input echoed without sanitization in search parameter",
+        remediation: "Encode output and validate inputs; apply CSP",
+      },
+      {
+        type: "Weak CORS Policy",
+        severity: "medium",
+        description:
+          "Access-Control-Allow-Origin is '*' with credentials enabled",
+        remediation:
+          "Restrict origins and avoid allowing credentials with wildcard",
+      },
+      {
+        type: "Directory Listing Enabled",
+        severity: "low",
+        description: "Index of / detected on root path",
+        remediation: "Disable autoindex on web server",
+      },
+    ],
+    [
+      {
+        type: "SQL Injection (heuristic)",
+        severity: "critical",
+        description:
+          "Potential SQL error responses detected with crafted payloads",
+        remediation: "Use parameterized queries and input validation",
+      },
+      {
+        type: "Server Version Disclosure",
+        severity: "low",
+        description: "Server header exposes detailed version information",
+        remediation: "Hide or generalize Server header",
+      },
+      {
+        type: "Missing X-Content-Type-Options",
+        severity: "low",
+        description: "No 'nosniff' header; risk of MIME sniffing",
+        remediation: "Add X-Content-Type-Options: nosniff",
+      },
+    ],
+  ];
+
+  return {
+    target,
+    status: "success",
+    vulnerabilities: variants[hash],
     scan_type: "basic",
     timestamp: new Date().toISOString(),
     scan_duration: 2.3,
+    using_mock: usingMock,
   };
 }
 
@@ -106,7 +166,9 @@ export interface NetworkScanResult {
   medium_count?: number;
 }
 
-export async function scanNetworkTarget(target: string): Promise<NetworkScanResult> {
+export async function scanNetworkTarget(
+  target: string
+): Promise<NetworkScanResult> {
   try {
     const response = await fetch(`${BACKEND_URL}/api/scanner/network-scan`, {
       method: "POST",
@@ -186,7 +248,9 @@ export async function fetchRecentCVEs(limit: number = 10): Promise<CVEData[]> {
     return (data.vulnerabilities || []).map((vuln: any) => ({
       id: vuln.cve.id,
       description: vuln.cve.descriptions?.[0]?.value || "N/A",
-      severity: (vuln.impact?.baseMetricV3?.cvssV3?.baseSeverity || "medium").toLowerCase(),
+      severity: (
+        vuln.impact?.baseMetricV3?.cvssV3?.baseSeverity || "medium"
+      ).toLowerCase(),
       cvss_score: vuln.impact?.baseMetricV3?.cvssV3?.baseScore || 0,
       published_date: vuln.cve.published,
     }));
@@ -263,7 +327,10 @@ export interface CodeScanResult {
   score: number;
 }
 
-export async function analyzeCode(repoUrl: string, language: string = "python"): Promise<CodeScanResult> {
+export async function analyzeCode(
+  repoUrl: string,
+  language: string = "python"
+): Promise<CodeScanResult> {
   try {
     const response = await fetch(`${BACKEND_URL}/api/code-review/analyze`, {
       method: "POST",
@@ -292,7 +359,7 @@ function getMockCodeScanResult(file: string): CodeScanResult {
         severity: "critical",
         line_number: 45,
         file_path: "src/auth/login.py",
-        description: 'User input directly concatenated in SQL query',
+        description: "User input directly concatenated in SQL query",
         cwe: "CWE-89",
         remediation: "Use parameterized queries",
       },
@@ -301,7 +368,7 @@ function getMockCodeScanResult(file: string): CodeScanResult {
         severity: "critical",
         line_number: 12,
         file_path: "src/utils/secrets.js",
-        description: 'API key hardcoded in source',
+        description: "API key hardcoded in source",
         cwe: "CWE-798",
         remediation: "Use environment variables or secrets manager",
       },
@@ -344,7 +411,9 @@ export interface PhishingAnalysis {
   spoofing_indicators?: string[];
 }
 
-export async function analyzePhishingRisk(email: string): Promise<PhishingAnalysis> {
+export async function analyzePhishingRisk(
+  email: string
+): Promise<PhishingAnalysis> {
   try {
     const response = await fetch(`${BACKEND_URL}/api/phishing/predict`, {
       method: "POST",
@@ -364,20 +433,31 @@ export async function analyzePhishingRisk(email: string): Promise<PhishingAnalys
 }
 
 function getMockPhishingAnalysis(email: string): PhishingAnalysis {
-  const isPhishing = email.includes("urgent") || email.includes("verify") || email.includes("confirm");
+  const isPhishing =
+    email.includes("urgent") ||
+    email.includes("verify") ||
+    email.includes("confirm");
 
   return {
     email,
     is_phishing: isPhishing,
     confidence: isPhishing ? 0.85 : 0.12,
     risk_factors: isPhishing
-      ? ["Urgency language detected", "Suspicious sender domain", "Request for personal information"]
+      ? [
+          "Urgency language detected",
+          "Suspicious sender domain",
+          "Request for personal information",
+        ]
       : ["No suspicious patterns detected"],
     analysis_summary: isPhishing
       ? "Email exhibits multiple phishing indicators including urgency language and suspicious URLs"
       : "Email appears to be from legitimate source with no phishing indicators",
-    suspicious_urls: isPhishing ? ["https://secure-paypal-verify.click/login"] : [],
-    spoofing_indicators: isPhishing ? ["Domain homograph attack", "Spoofed PayPal branding"] : [],
+    suspicious_urls: isPhishing
+      ? ["https://secure-paypal-verify.click/login"]
+      : [],
+    spoofing_indicators: isPhishing
+      ? ["Domain homograph attack", "Spoofed PayPal branding"]
+      : [],
     timestamp: new Date().toISOString(),
   };
 }
