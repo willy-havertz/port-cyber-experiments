@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Play, X, Plus } from "lucide-react";
+import { Play, X, Plus, CheckCircle2, AlertCircle } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { toast } from "sonner";
 
 interface ApiEndpoint {
   id: string;
@@ -77,16 +78,39 @@ export default function APIAuditTab() {
       ]);
       setNewPath("");
       setNewMethod("GET");
+      toast.success(`Endpoint ${newPath} added successfully`, {
+        description: `Added ${newMethod} ${newPath}`,
+        duration: 2000,
+      });
     }
   };
 
   const handleRemoveEndpoint = (id: string) => {
+    const removed = endpoints.find((e) => e.id === id);
     setEndpoints(endpoints.filter((e) => e.id !== id));
+    if (removed) {
+      toast.success(`Endpoint removed`, {
+        description: `Removed ${removed.method} ${removed.path}`,
+        duration: 2000,
+      });
+    }
   };
 
   const handleRunAudit = async () => {
+    if (!baseUrl.trim()) {
+      toast.error("Invalid configuration", {
+        description: "Please enter a base URL",
+        duration: 3000,
+      });
+      return;
+    }
+
     setRunning(true);
     setError("");
+    const loadingToast = toast.loading("Running API security audit...", {
+      description: `Testing ${endpoints.length} endpoint(s)`,
+    });
+
     try {
       // Mock API audit results
       const mockFindings: ApiFinding[] = [
@@ -140,6 +164,9 @@ export default function APIAuditTab() {
         },
       ];
 
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       setAuditResults({
         base_url: baseUrl,
         endpoints_tested: endpoints.length,
@@ -149,11 +176,22 @@ export default function APIAuditTab() {
       });
       setResults(true);
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      toast.dismiss(loadingToast);
+      toast.success("API audit completed", {
+        icon: <CheckCircle2 className="w-5 h-5" />,
+        description: `Found ${mockFindings.length} security findings across ${endpoints.length} endpoints`,
+        duration: 4000,
+      });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Audit failed");
+      const errorMsg = err instanceof Error ? err.message : "Audit failed";
+      setError(errorMsg);
       setResults(true);
+      toast.dismiss(loadingToast);
+      toast.error("Audit failed", {
+        icon: <AlertCircle className="w-5 h-5" />,
+        description: errorMsg,
+        duration: 4000,
+      });
     } finally {
       setRunning(false);
     }

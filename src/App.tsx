@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import TabNavigation from "./components/TabNavigation";
 import LandingPage from "./components/LandingPage";
+import ToastProvider from "./components/ToastProvider";
 import NetworkSecurityTab from "./components/tabs/NetworkSecurityTab";
 import IncidentResponseTab from "./components/tabs/IncidentResponseTab";
 import ThreatIntelTab from "./components/tabs/ThreatIntelTab";
@@ -117,16 +118,19 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-cyber-darker flex flex-col">
-      {activeTab && <Header onBack={() => setActiveTab(null)} />}
-      {activeTab && (
-        <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-      )}
-      <main className="flex-1">
-        <div className="tab-enter">{renderTab()}</div>
-      </main>
+    <>
+      <ToastProvider />
+      <div className="min-h-screen bg-cyber-darker flex flex-col">
+        {activeTab && <Header onBack={() => setActiveTab(null)} />}
+        {activeTab && (
+          <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
+        )}
+        <main className="flex-1">
+          <div className="tab-enter">{renderTab()}</div>
+        </main>
 
-      {activeTab && <Footer />}
-    </div>
+        {activeTab && <Footer />}
+      </div>
+    </>
   );
 }

@@ -8,6 +8,7 @@ import {
   AlertCircle,
   CheckCircle,
 } from "lucide-react";
+import { toast } from "sonner";
 import { scanTarget, ScanResult } from "../../lib/api-services";
 
 export default function ScannerTab() {
@@ -25,12 +26,20 @@ export default function ScannerTab() {
 
   const handleRunScan = async () => {
     if (!targetUrl.trim()) {
-      setError("Please enter a valid target URL");
+      toast.error("Invalid input", {
+        description: "Please enter a valid target URL",
+        duration: 3000,
+      });
       return;
     }
     setRunning(true);
     setError(null);
     setResults(false);
+    
+    const loadingToast = toast.loading("Running vulnerability scan...", {
+      description: `Scanning ${targetUrl} with ${scanType} profile`,
+    });
+
     try {
       const result = await scanTarget({
         target_url: targetUrl,
@@ -38,8 +47,30 @@ export default function ScannerTab() {
       });
       setScanResults(result);
       setResults(true);
+      
+      toast.dismiss(loadingToast);
+      if (result.vulnerabilities.length > 0) {
+        toast.success("Scan completed", {
+          icon: <CheckCircle className="w-5 h-5" />,
+          description: `Found ${result.vulnerabilities.length} vulnerabilities`,
+          duration: 4000,
+        });
+      } else {
+        toast.success("Scan completed - No vulnerabilities found", {
+          icon: <Shield className="w-5 h-5" />,
+          description: "Target appears secure",
+          duration: 4000,
+        });
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Scan failed");
+      const errorMsg = err instanceof Error ? err.message : "Scan failed";
+      setError(errorMsg);
+      toast.dismiss(loadingToast);
+      toast.error("Scan failed", {
+        icon: <AlertCircle className="w-5 h-5" />,
+        description: errorMsg,
+        duration: 4000,
+      });
     } finally {
       setRunning(false);
     }
