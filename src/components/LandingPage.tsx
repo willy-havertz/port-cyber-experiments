@@ -175,59 +175,62 @@ export default function LandingPage({
       <div className="flex-1">
         <div className="container mx-auto px-4 py-16">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="bg-cyber-dark border border-cyber-border rounded-lg p-6 hover:border-cyber-accent transition-all group"
-              >
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyber-accent transition-colors">
-                    {project.name}
-                  </h3>
-                  <span className="inline-block bg-cyber-border text-cyan-400 text-xs font-semibold px-2 py-1 rounded">
-                    {project.language}
-                  </span>
-                </div>
+            {projects
+              .slice()
+              .reverse()
+              .map((project) => (
+                <div
+                  key={project.id}
+                  className="bg-cyber-dark border border-cyber-border rounded-lg p-6 hover:border-cyber-accent transition-all group"
+                >
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                      {project.name}
+                    </h3>
+                    <span className="inline-block bg-cyber-border text-cyan-400 text-xs font-semibold px-2 py-1 rounded">
+                      {project.language}
+                    </span>
+                  </div>
 
-                <p className="text-gray-400 text-sm mb-4">
-                  {project.description}
-                </p>
-
-                <div className="mb-6">
-                  <p className="text-gray-500 text-xs font-semibold mb-2">
-                    Features:
+                  <p className="text-gray-400 text-sm mb-4">
+                    {project.description}
                   </p>
-                  <div className="flex flex-wrap gap-1">
-                    {project.features.map((feature) => (
-                      <span
-                        key={feature}
-                        className="bg-cyber-border text-gray-300 text-xs px-2 py-1 rounded"
-                      >
-                        {feature}
-                      </span>
-                    ))}
+
+                  <div className="mb-6">
+                    <p className="text-gray-500 text-xs font-semibold mb-2">
+                      Features:
+                    </p>
+                    <div className="flex flex-wrap gap-1">
+                      {project.features.map((feature) => (
+                        <span
+                          key={feature}
+                          className="bg-cyber-border text-gray-300 text-xs px-2 py-1 rounded"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => onSelectProject(project.id)}
+                      className="flex-1 flex items-center justify-center gap-2 bg-cyber-accent hover:bg-cyan-400 text-black font-bold py-2 rounded transition-all"
+                    >
+                      View Demo
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-2 bg-cyber-border hover:bg-cyber-border/80 text-gray-300 rounded transition-all flex items-center"
+                    >
+                      <Github className="w-4 h-4" />
+                    </a>
                   </div>
                 </div>
-
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => onSelectProject(project.id)}
-                    className="flex-1 flex items-center justify-center gap-2 bg-cyber-accent hover:bg-cyan-400 text-black font-bold py-2 rounded transition-all"
-                  >
-                    View Demo
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <a
-                    href={project.repo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-2 bg-cyber-border hover:bg-cyber-border/80 text-gray-300 rounded transition-all flex items-center"
-                  >
-                    <Github className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
