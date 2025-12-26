@@ -47,7 +47,7 @@ export default function LandingPage({
     },
     {
       id: "threat",
-      name: "Threat Intelligence Platform",
+      name: "CVE Intelligence Dashboard",
       description:
         "Multi-source threat intelligence aggregation with enrichment and correlation. Aggregates indicators from OSINT, CVE, malware, and phishing feeds.",
       language: "Python",
