@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Shield, Lock, AlertTriangle, CheckCircle, Download } from "lucide-react";
+import { toast } from "sonner";
 
 interface PasswordResult {
   password: string;
@@ -188,8 +189,23 @@ export default function PasswordAnalyzerTab() {
     try {
       const analysis = await analyzePassword(password);
       setResult(analysis);
+      if (analysis.breached) {
+        toast.error(`Password Compromised! ${analysis.breachCount} breaches found`, { 
+          description: "Change immediately!" 
+        });
+      } else {
+        toast.success(`${analysis.strength} - Entropy: ${analysis.entropy.toFixed(1)} bits`, {
+          description: "Password meets security standards"
+        });
+      }
+      if (analysis.breached) {
+        toast.error(`Password Compromised - ${analysis.breachCount} breaches`, { description: "Change immediately!" });
+      } else {
+        toast.success(`Analysis: ${analysis.strength}`, { description: `Entropy: ${analysis.entropy.toFixed(1)} bits` });
+      }
     } catch (err: any) {
       setError(err.message || "Analysis failed");
+      toast.error("Analysis failed", { description: err.message });
     } finally {
       setLoading(false);
     }

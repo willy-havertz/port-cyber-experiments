@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Shield, AlertTriangle, CheckCircle, Lock, X } from "lucide-react";
+import { toast } from "sonner";
 
 interface CertificateInfo {
   domain: string;
@@ -189,6 +190,7 @@ export default function CertificateAnalyzerTab() {
 
   const handleAnalyze = () => {
     if (!domain.trim()) {
+      toast.error("Invalid domain", { description: "Please enter a domain" });
       setError("Please enter a domain");
       return;
     }

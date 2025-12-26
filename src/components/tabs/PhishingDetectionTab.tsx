@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Play, CheckCircle } from "lucide-react";
+import { toast } from "sonner";
 import { analyzePhishingRisk, PhishingAnalysis } from "../../lib/api-services";
 
 export default function PhishingDetectionTab() {
@@ -13,10 +14,33 @@ export default function PhishingDetectionTab() {
     setRunning(true);
     setError("");
     try {
+      const toastId = toast.loading("Analyzing for phishing patterns...");
       const result = await analyzePhishingRisk(emailContent);
+      
+      toast.dismiss(toastId);
+      
+      if (result.is_phishing) {
+        if (result.confidence > 0.8) {
+          toast.error(`CRITICAL - Highly likely phishing (${(result.confidence * 100).toFixed(0)}%)`, {
+            description: "Do not click links or provide information"
+          });
+        } else if (result.confidence > 0.5) {
+          toast.warning(`SUSPICIOUS - Possible phishing (${(result.confidence * 100).toFixed(0)}%)`, {
+            description: "Review carefully before interacting"
+          });
+        }
+      } else {
+        toast.success(`LOW RISK - Appears legitimate`, {
+          description: `Confidence: ${(result.confidence * 100).toFixed(0)}%`
+        });
+      }
+      
       setPhishingResults(result);
       setResults(true);
     } catch (err) {
+      toast.error("Analysis failed", {
+        description: err instanceof Error ? err.message : "Unknown error"
+      });
       setError(err instanceof Error ? err.message : "Analysis failed");
       setResults(true);
     } finally {
