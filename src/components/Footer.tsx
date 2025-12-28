@@ -21,11 +21,6 @@ export default function Footer() {
                   Threat Intelligence
                 </a>
               </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-white font-semibold mb-3">More</h3>
-            <ul className="space-y-2 text-sm text-gray-400">
               <li>
                 <a href="#code" className="hover:text-cyber-accent">
                   Code Review
@@ -34,6 +29,36 @@ export default function Footer() {
               <li>
                 <a href="#phishing" className="hover:text-cyber-accent">
                   Phishing Detection
+                </a>
+              </li>
+              <li>
+                <a href="#scanner" className="hover:text-cyber-accent">
+                  Vulnerability Scanner
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-white font-semibold mb-3">More</h3>
+            <ul className="space-y-2 text-sm text-gray-400">
+              <li>
+                <a href="#api-audit" className="hover:text-cyber-accent">
+                  API Audit
+                </a>
+              </li>
+              <li>
+                <a href="#password" className="hover:text-cyber-accent">
+                  Password Analyzer
+                </a>
+              </li>
+              <li>
+                <a href="#certificate" className="hover:text-cyber-accent">
+                  Certificate Checker
+                </a>
+              </li>
+              <li>
+                <a href="#security-tools" className="hover:text-cyber-accent">
+                  Security Tools
                 </a>
               </li>
             </ul>

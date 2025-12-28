@@ -1,3 +1,127 @@
+/* Custom styles for TabNavigation dropdown on small screens */
+.tab-dropdown {
+  background: linear-gradient(90deg, #18181b 60%, #23232b 100%);
+  color: #00ffe7;
+  border-radius: 9999px;
+  border: 2px solid #00ffe7;
+  font-size: 1.15rem;
+  font-weight: 500;
+  box-shadow: 0 2px 12px 0 #00ffe733;
+  padding: 1.1rem 1.5rem;
+  min-height: 56px;
+  min-width: 180px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.tab-dropdown:focus {
+  outline: none;
+  border-color: #ff00c8;
+  box-shadow: 0 0 0 3px #ff00c855;
+}
+.tab-dropdown option {
+  color: #18181b;
+  background: #e0f7fa;
+  font-size: 1rem;
+  padding: 0.7rem 1rem;
+}
+/* Advanced wiggle and color pulse animation for scroll arrows */
+.tab-fade:hover .arrow-bounce {
+  animation: bounce-arrow 0.4s, color-pulse 0.4s;
+}
+@keyframes bounce-arrow {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-8px) rotate(-10deg);
+  }
+  40% {
+    transform: translateY(4px) rotate(8deg);
+  }
+  60% {
+    transform: translateY(-2px) rotate(-6deg);
+  }
+  80% {
+    transform: translateY(2px) rotate(4deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+@keyframes color-pulse {
+  0% {
+    color: #00ffe7;
+  }
+  50% {
+    color: #ff00c8;
+  }
+  100% {
+    color: #00ffe7;
+  }
+}
+.arrow-bounce {
+  transition: transform 0.2s, color 0.2s;
+}
+/* Bounce animation for scroll arrows */
+.arrow-bounce {
+  transition: transform 0.2s;
+}
+.tab-fade:hover .arrow-bounce {
+  animation: bounce-arrow 0.4s;
+}
+@keyframes bounce-arrow {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px);
+  }
+  60% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+/* Hide horizontal scrollbar for tab navigation */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+/* TabNavigation scroll fade effect */
+.tab-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+.tab-fade-left {
+  left: 0;
+  background: linear-gradient(to right, #18181b 80%, transparent);
+}
+.tab-fade-right {
+  right: 0;
+  background: linear-gradient(to left, #18181b 80%, transparent);
+}
+.tab-fade:hover {
+  opacity: 1;
+}
+
+/* Animated active tab transition */
+.tab-active-animate {
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s, border 0.3s;
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
