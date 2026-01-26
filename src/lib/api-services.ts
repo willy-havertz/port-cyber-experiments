@@ -44,7 +44,9 @@ export async function scanTarget(request: ScanRequest): Promise<ScanResult> {
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ detail: response.statusText }));
+      const error = await response
+        .json()
+        .catch(() => ({ detail: response.statusText }));
       throw new Error(error.detail || `Scan failed: ${response.statusText}`);
     }
 
@@ -57,7 +59,7 @@ export async function scanTarget(request: ScanRequest): Promise<ScanResult> {
 
 function getMockScanResult(
   target: string,
-  usingMock: boolean = false
+  usingMock: boolean = false,
 ): ScanResult {
   // Create a simple deterministic hash to vary mock output by target
   const hash =
@@ -166,7 +168,7 @@ export interface NetworkScanResult {
 }
 
 export async function scanNetworkTarget(
-  target: string
+  target: string,
 ): Promise<NetworkScanResult> {
   try {
     const response = await fetch(`${BACKEND_URL}/scanner/network-scan`, {
@@ -235,7 +237,7 @@ export async function fetchRecentCVEs(limit: number = 10): Promise<CVEData[]> {
       `${NVD_API}?resultsPerPage=${limit}&orderBy=published&sortOrder=desc`,
       {
         headers: { "api-key": "" },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -328,7 +330,7 @@ export interface CodeScanResult {
 
 export async function analyzeCode(
   repoUrl: string,
-  language: string = "python"
+  language: string = "python",
 ): Promise<CodeScanResult> {
   try {
     const response = await fetch(`${BACKEND_URL}/scanner/code-review`, {
@@ -411,7 +413,7 @@ export interface PhishingAnalysis {
 }
 
 export async function analyzePhishingRisk(
-  email: string
+  email: string,
 ): Promise<PhishingAnalysis> {
   try {
     const response = await fetch(`${BACKEND_URL}/scanner/phishing-detect`, {

@@ -130,14 +130,14 @@ export default function ThreatIntelTab() {
                   cve.severity === "critical"
                     ? "bg-red-900/20 border-red-700"
                     : cve.severity === "high"
-                    ? "bg-orange-900/20 border-orange-700"
-                    : "bg-yellow-900/20 border-yellow-700";
+                      ? "bg-orange-900/20 border-orange-700"
+                      : "bg-yellow-900/20 border-yellow-700";
                 const textColor =
                   cve.severity === "critical"
                     ? "text-red-400"
                     : cve.severity === "high"
-                    ? "text-orange-400"
-                    : "text-yellow-400";
+                      ? "text-orange-400"
+                      : "text-yellow-400";
                 return (
                   <div key={idx} className={`${bgColor} border rounded-xl p-4`}>
                     <div className="flex justify-between items-start mb-2">
