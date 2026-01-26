@@ -109,35 +109,35 @@ export default function ScannerTab() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
+      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-2">
               Automated Vulnerability Scanner
             </h2>
-            <p className="text-gray-400 mb-4">
+            <p className="text-slate-400 mb-4">
               Production-ready FastAPI scanner with SSRF-safe IP validation,
               security header audits, XSS/SQLi detection, CORS analysis,
               per-user rate limiting, and Docker deployment.
             </p>
           </div>
-          <Shield className="w-12 h-12 text-cyan-500 flex-shrink-0" />
+          <Shield className="w-12 h-12 text-green-500 flex-shrink-0" />
         </div>
         <div className="grid grid-cols-4 gap-4 mb-6 text-sm">
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Language</p>
+          <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-3">
+            <p className="text-slate-400">Language</p>
             <p className="text-white font-semibold">Python</p>
           </div>
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Framework</p>
+          <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-3">
+            <p className="text-slate-400">Framework</p>
             <p className="text-white font-semibold">FastAPI</p>
           </div>
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Deployment</p>
+          <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-3">
+            <p className="text-slate-400">Deployment</p>
             <p className="text-white font-semibold">Docker</p>
           </div>
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Authentication</p>
+          <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-3">
+            <p className="text-slate-400">Authentication</p>
             <p className="text-white font-semibold">JWT</p>
           </div>
         </div>
@@ -146,7 +146,7 @@ export default function ScannerTab() {
             href="https://github.com/willy-havertz/port-cyber-scanner"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded transition"
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl transition"
           >
             <Zap className="w-4 h-4" />
             GitHub Repository
@@ -155,7 +155,7 @@ export default function ScannerTab() {
             href="https://port-cyber-scanner.onrender.com/docs"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded transition"
+            className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition"
           >
             <Lock className="w-4 h-4" />
             API Docs
@@ -163,15 +163,15 @@ export default function ScannerTab() {
         </div>
       </div>
 
-      <div className="flex gap-2 border-b border-cyber-border">
+      <div className="flex gap-2 border-b border-slate-700/50">
         {(["overview", "scan", "report"] as const).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveSubTab(tab)}
             className={`px-4 py-2 font-semibold transition ${
               activeSubTab === tab
-                ? "text-cyan-400 border-b-2 border-cyan-400"
-                : "text-gray-400 hover:text-cyan-400"
+                ? "text-green-400 border-b-2 border-green-500"
+                : "text-slate-400 hover:text-green-400"
             }`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -181,70 +181,70 @@ export default function ScannerTab() {
 
       {activeSubTab === "overview" && (
         <div className="space-y-6">
-          <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
             <h3 className="text-xl font-bold text-white mb-4">Key Features</h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">
+              <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                <p className="text-green-400 font-semibold mb-2">
                   🔒 SSRF Protection
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   Safe IP validation with whitelist support
                 </p>
               </div>
-              <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">
+              <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                <p className="text-green-400 font-semibold mb-2">
                   📊 Header Audits
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   Checks for security headers (CSP, HSTS, etc)
                 </p>
               </div>
-              <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">
+              <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                <p className="text-green-400 font-semibold mb-2">
                   ⚡ XSS/SQLi Detection
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   Pattern matching & heuristic analysis
                 </p>
               </div>
-              <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">
+              <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                <p className="text-green-400 font-semibold mb-2">
                   🌐 CORS Analysis
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   Identifies overly permissive CORS policies
                 </p>
               </div>
-              <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">
+              <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                <p className="text-green-400 font-semibold mb-2">
                   ⏱️ Rate Limiting
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   Per-user limits with Redis backend
                 </p>
               </div>
-              <div className="bg-cyber-border rounded p-4">
-                <p className="text-cyan-400 font-semibold mb-2">
+              <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                <p className="text-green-400 font-semibold mb-2">
                   🐳 Docker Ready
                 </p>
-                <p className="text-gray-400 text-sm">
+                <p className="text-slate-400 text-sm">
                   Full containerization for production
                 </p>
               </div>
             </div>
           </div>
           {scanResults && scanResults.vulnerabilities.length > 0 && (
-            <div className="bg-cyber-dark border border-cyan-400 rounded-lg p-6">
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-green-500 rounded-xl p-6">
               <h3 className="text-xl font-bold text-white mb-2">
                 Latest Scan Results
               </h3>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="text-slate-400 text-sm mb-4">
                 {scanResults.target} ({scanResults.scan_type} scan)
               </p>
               <div className="grid grid-cols-4 gap-4">
-                <div className="bg-cyber-border rounded p-4">
-                  <p className="text-gray-400 text-xs">Critical</p>
+                <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                  <p className="text-slate-400 text-xs">Critical</p>
                   <p className="text-red-400 text-2xl font-bold">
                     {
                       scanResults.vulnerabilities.filter(
@@ -253,8 +253,8 @@ export default function ScannerTab() {
                     }
                   </p>
                 </div>
-                <div className="bg-cyber-border rounded p-4">
-                  <p className="text-gray-400 text-xs">High</p>
+                <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                  <p className="text-slate-400 text-xs">High</p>
                   <p className="text-orange-400 text-2xl font-bold">
                     {
                       scanResults.vulnerabilities.filter(
@@ -263,8 +263,8 @@ export default function ScannerTab() {
                     }
                   </p>
                 </div>
-                <div className="bg-cyber-border rounded p-4">
-                  <p className="text-gray-400 text-xs">Medium</p>
+                <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                  <p className="text-slate-400 text-xs">Medium</p>
                   <p className="text-yellow-400 text-2xl font-bold">
                     {
                       scanResults.vulnerabilities.filter(
@@ -273,9 +273,9 @@ export default function ScannerTab() {
                     }
                   </p>
                 </div>
-                <div className="bg-cyber-border rounded p-4">
-                  <p className="text-gray-400 text-xs">Total</p>
-                  <p className="text-cyan-400 text-2xl font-bold">
+                <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                  <p className="text-slate-400 text-xs">Total</p>
+                  <p className="text-green-400 text-2xl font-bold">
                     {scanResults.vulnerabilities.length}
                   </p>
                 </div>
@@ -287,19 +287,19 @@ export default function ScannerTab() {
 
       {activeSubTab === "scan" && (
         <div className="space-y-6">
-          <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
             <h3 className="text-xl font-bold text-white mb-4">
               Run Real Security Scan
             </h3>
             {error && (
-              <div className="mb-4 p-4 bg-red-900/20 border border-red-600 rounded text-red-400 flex gap-2">
+              <div className="mb-4 p-4 bg-red-900/20 border border-red-600 rounded-xl text-red-400 flex gap-2">
                 <AlertCircle className="w-5 h-5 flex-shrink-0" />
                 {error}
               </div>
             )}
             <div className="space-y-4 mb-6">
               <div>
-                <label className="block text-gray-400 text-sm mb-2">
+                <label className="block text-slate-400 text-sm mb-2">
                   Target URL
                 </label>
                 <input
@@ -308,7 +308,7 @@ export default function ScannerTab() {
                   onChange={(e) => setTargetUrl(e.target.value)}
                   placeholder="h4cker.org or https://example.com"
                   disabled={running}
-                  className="w-full bg-cyber-border text-white px-4 py-2 rounded border border-cyber-border focus:border-cyan-400 outline-none disabled:opacity-50"
+                  className="w-full bg-slate-700/50 border border-slate-600/50 text-white px-4 py-2 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none disabled:opacity-50"
                 />
                 <p className="text-gray-500 text-xs mt-1">
                   Note: Only scan targets you own or have permission to test.
@@ -316,14 +316,14 @@ export default function ScannerTab() {
                 </p>
               </div>
               <div>
-                <label className="block text-gray-400 text-sm mb-2">
+                <label className="block text-slate-400 text-sm mb-2">
                   Scan Type
                 </label>
                 <select
                   value={scanType}
                   onChange={(e) => setScanType(e.target.value as any)}
                   disabled={running}
-                  className="w-full bg-cyber-border text-white px-4 py-2 rounded border border-cyber-border focus:border-cyan-400 outline-none disabled:opacity-50"
+                  className="w-full bg-slate-700/50 border border-slate-600/50 text-white px-4 py-2 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none disabled:opacity-50"
                 >
                   <option value="basic">Basic Scan (Security Headers)</option>
                   <option value="full">Full Scan (Comprehensive)</option>
@@ -334,23 +334,23 @@ export default function ScannerTab() {
             <button
               onClick={handleRunScan}
               disabled={running}
-              className="flex items-center gap-2 w-full justify-center px-6 py-3 bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded transition"
+              className="flex items-center gap-2 w-full justify-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white shadow-lg shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed font-semibold rounded-xl transition"
             >
               <Play className="w-4 h-4" />
               {running ? "Scanning..." : "Start Real Scan"}
             </button>
           </div>
           {running && (
-            <div className="bg-cyber-dark border border-cyan-500 rounded-lg p-6">
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-green-500 rounded-xl p-6">
               <h4 className="text-white font-semibold mb-4">Scan Progress</h4>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border border-cyan-400 border-t-transparent" />
-                  <p className="text-cyan-400">Scanning {targetUrl}...</p>
+                  <div className="animate-spin rounded-full h-4 w-4 border border-green-400 border-t-transparent" />
+                  <p className="text-green-400">Scanning {targetUrl}...</p>
                 </div>
-                <div className="w-full bg-cyber-border rounded-full h-2">
+                <div className="w-full bg-slate-700/50 border border-slate-600/50 rounded-full h-2">
                   <div
-                    className="bg-cyan-500 h-2 rounded-full animate-pulse"
+                    className="bg-green-500 h-2 rounded-full animate-pulse"
                     style={{ width: "45%" }}
                   />
                 </div>
@@ -358,18 +358,18 @@ export default function ScannerTab() {
             </div>
           )}
           {results && scanResults && (
-            <div className="bg-cyber-dark border border-cyan-400 rounded-lg p-6">
+            <div className="bg-slate-800/50 backdrop-blur-sm border border-green-500 rounded-xl p-6">
               <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-green-400" />
                 Scan Complete
               </h4>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="text-slate-400 text-sm mb-4">
                 Target: {scanResults.target} | Duration:{" "}
                 {scanResults.scan_duration}s
               </p>
               <div className="grid grid-cols-4 gap-4 mb-4">
-                <div className="bg-cyber-border rounded p-4">
-                  <p className="text-gray-400 text-sm">Critical</p>
+                <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                  <p className="text-slate-400 text-sm">Critical</p>
                   <p className="text-red-400 text-2xl font-bold">
                     {
                       scanResults.vulnerabilities.filter(
@@ -378,8 +378,8 @@ export default function ScannerTab() {
                     }
                   </p>
                 </div>
-                <div className="bg-cyber-border rounded p-4">
-                  <p className="text-gray-400 text-sm">High</p>
+                <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                  <p className="text-slate-400 text-sm">High</p>
                   <p className="text-orange-400 text-2xl font-bold">
                     {
                       scanResults.vulnerabilities.filter(
@@ -388,8 +388,8 @@ export default function ScannerTab() {
                     }
                   </p>
                 </div>
-                <div className="bg-cyber-border rounded p-4">
-                  <p className="text-gray-400 text-sm">Medium</p>
+                <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                  <p className="text-slate-400 text-sm">Medium</p>
                   <p className="text-yellow-400 text-2xl font-bold">
                     {
                       scanResults.vulnerabilities.filter(
@@ -398,16 +398,16 @@ export default function ScannerTab() {
                     }
                   </p>
                 </div>
-                <div className="bg-cyber-border rounded p-4">
-                  <p className="text-gray-400 text-sm">Total</p>
-                  <p className="text-cyan-400 text-2xl font-bold">
+                <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-4">
+                  <p className="text-slate-400 text-sm">Total</p>
+                  <p className="text-green-400 text-2xl font-bold">
                     {scanResults.vulnerabilities.length}
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => downloadReport(formatReport(scanResults))}
-                className="flex items-center gap-2 w-full justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded transition"
+                className="flex items-center gap-2 w-full justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl transition"
               >
                 <Download className="w-4 h-4" />
                 Download Full Report
@@ -418,25 +418,25 @@ export default function ScannerTab() {
       )}
 
       {activeSubTab === "report" && (
-        <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
+        <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
           <h3 className="text-xl font-bold text-white mb-4">
             Vulnerability Report
           </h3>
           {scanResults ? (
             <div className="space-y-4">
-              <pre className="bg-cyber-border text-green-400 p-4 rounded text-xs overflow-auto max-h-96 font-mono">
+              <pre className="bg-slate-700/50 border border-slate-600/50 text-green-400 p-4 rounded-xl text-xs overflow-auto max-h-96 font-mono">
                 {formatReport(scanResults)}
               </pre>
               <button
                 onClick={() => downloadReport(formatReport(scanResults))}
-                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded transition"
+                className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-xl transition"
               >
                 <Download className="w-4 h-4" />
                 Download Report
               </button>
             </div>
           ) : (
-            <p className="text-gray-400">
+            <p className="text-slate-400">
               Run a scan first to generate detailed report.
             </p>
           )}

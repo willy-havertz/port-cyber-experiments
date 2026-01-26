@@ -230,35 +230,35 @@ export default function APIAuditTab() {
   return (
     <div className="space-y-8">
       {/* Input Section */}
-      <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-6">
-        <h2 className="text-xl font-bold text-white mb-4">API Configuration</h2>
+      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <h2 className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-4">API Configuration</h2>
 
         {/* Base URL */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-300 mb-2">Base URL</label>
+          <label className="block text-sm font-medium text-slate-300 mb-2">Base URL</label>
           <input
             type="text"
             value={baseUrl}
             onChange={(e) => setBaseUrl(e.target.value)}
             placeholder="https://api.example.com"
             disabled={running}
-            className="w-full px-4 py-2 bg-slate-700 border border-cyan-500/30 rounded text-white placeholder-gray-500 disabled:opacity-50"
+            className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 disabled:opacity-50 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none"
           />
-          <p className="text-xs text-gray-400 mt-1">Enter the API base URL to audit</p>
+          <p className="text-xs text-slate-400 mt-1">Enter the API base URL to audit</p>
         </div>
 
         {/* Endpoints */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-300 mb-2">
+          <label className="block text-sm font-medium text-slate-300 mb-2">
             Endpoints ({endpoints.length})
           </label>
           <div className="space-y-2 mb-3">
             {endpoints.map((endpoint) => (
-              <div key={endpoint.id} className="flex items-center gap-2 bg-slate-700/50 p-2 rounded">
-                <span className="px-2 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-mono rounded min-w-12">
+              <div key={endpoint.id} className="flex items-center gap-2 bg-slate-700/50 p-2 rounded-xl">
+                <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs font-mono rounded min-w-12">
                   {endpoint.method}
                 </span>
-                <span className="flex-1 text-sm text-gray-300 font-mono">{endpoint.path}</span>
+                <span className="flex-1 text-sm text-slate-300 font-mono">{endpoint.path}</span>
                 <button
                   onClick={() => handleRemoveEndpoint(endpoint.id)}
                   disabled={running}
@@ -276,7 +276,7 @@ export default function APIAuditTab() {
               value={newMethod}
               onChange={(e) => setNewMethod(e.target.value as ApiEndpoint["method"])}
               disabled={running}
-              className="px-3 py-2 bg-slate-700 border border-cyan-500/30 rounded text-white text-sm disabled:opacity-50"
+              className="px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white text-sm disabled:opacity-50 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none"
             >
               <option>GET</option>
               <option>POST</option>
@@ -292,13 +292,13 @@ export default function APIAuditTab() {
               onChange={(e) => setNewPath(e.target.value)}
               placeholder="/api/endpoint"
               disabled={running}
-              className="flex-1 px-4 py-2 bg-slate-700 border border-cyan-500/30 rounded text-white placeholder-gray-500 text-sm disabled:opacity-50"
+              className="flex-1 px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 text-sm disabled:opacity-50 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none"
               onKeyPress={(e) => e.key === "Enter" && handleAddEndpoint()}
             />
             <button
               onClick={handleAddEndpoint}
               disabled={running || !newPath.trim()}
-              className="px-3 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 text-white rounded flex items-center gap-1 text-sm font-medium"
+              className="px-3 py-2 bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white rounded-xl flex items-center gap-1 text-sm font-medium"
             >
               <Plus size={16} /> Add
             </button>
@@ -309,7 +309,7 @@ export default function APIAuditTab() {
         <button
           onClick={handleRunAudit}
           disabled={running || !baseUrl.trim()}
-          className="w-full px-4 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 disabled:opacity-50 text-white font-bold rounded-lg flex items-center justify-center gap-2 transition-all"
+          className="w-full px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-green-500/25"
         >
           <Play size={20} />
           {running ? "Auditing API..." : "Start API Audit"}
@@ -320,29 +320,29 @@ export default function APIAuditTab() {
       {results && (
         <div className="space-y-6">
           {error ? (
-            <div className="bg-red-900/30 border border-red-500 rounded-lg p-4">
+            <div className="bg-red-900/30 border border-red-500 rounded-xl p-4">
               <p className="text-red-200">{error}</p>
             </div>
           ) : auditResults ? (
             <>
               {/* Summary */}
               <div className="grid grid-cols-3 gap-4">
-                <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-4">
-                  <div className="text-gray-400 text-sm mb-1">Base URL</div>
+                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4">
+                  <div className="text-slate-400 text-sm mb-1">Base URL</div>
                   <div className="text-white font-mono text-sm truncate">{auditResults.base_url}</div>
                 </div>
-                <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-4">
-                  <div className="text-gray-400 text-sm mb-1">Endpoints Tested</div>
+                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4">
+                  <div className="text-slate-400 text-sm mb-1">Endpoints Tested</div>
                   <div className="text-white font-bold text-2xl">{auditResults.endpoints_tested}</div>
                 </div>
-                <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-4">
-                  <div className="text-gray-400 text-sm mb-1">Total Findings</div>
+                <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4">
+                  <div className="text-slate-400 text-sm mb-1">Total Findings</div>
                   <div className="text-white font-bold text-2xl">{auditResults.total_findings}</div>
                 </div>
               </div>
 
               {/* Severity Chart */}
-              <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-6">
+              <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-white mb-4">Findings by Severity</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={severityData}>
@@ -352,24 +352,24 @@ export default function APIAuditTab() {
                     <Tooltip
                       contentStyle={{
                         backgroundColor: "#1e293b",
-                        border: "1px solid #0891b2",
+                        border: "1px solid #22c55e",
                         borderRadius: "8px",
                       }}
-                      cursor={{ fill: "rgba(6, 182, 212, 0.1)" }}
+                      cursor={{ fill: "rgba(34, 197, 94, 0.1)" }}
                     />
-                    <Bar dataKey="value" fill="#06b6d4" />
+                    <Bar dataKey="value" fill="#22c55e" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
               {/* Findings List */}
-              <div className="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-6">
+              <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
                 <h3 className="text-lg font-bold text-white mb-4">Security Findings</h3>
                 <div className="space-y-3">
                   {auditResults.findings.map((finding: ApiFinding, idx: number) => (
                     <div
                       key={idx}
-                      className={`border rounded-lg p-4 ${getSeverityColor(finding.severity)}`}
+                      className={`border rounded-xl p-4 ${getSeverityColor(finding.severity)}`}
                     >
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="font-semibold">{finding.type}</h4>

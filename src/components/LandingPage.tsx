@@ -169,16 +169,16 @@ export default function LandingPage({
   ];
 
   return (
-    <div className="min-h-screen bg-cyber-darker flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-cyber-dark via-cyber-darker to-cyber-darker py-20 border-b border-cyber-border">
+      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-20 border-b border-slate-700/50">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-5xl font-bold text-white mb-4">
               Cybersecurity
-              <span className="text-cyber-accent"> Projects</span>
+              <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"> Projects</span>
             </h1>
-            <p className="text-gray-400 text-lg mb-8">
+            <p className="text-slate-400 text-lg mb-8">
               Interactive dashboards showcasing real-world security
               implementations
             </p>
@@ -196,30 +196,30 @@ export default function LandingPage({
               .map((project) => (
                 <div
                   key={project.id}
-                  className="bg-cyber-dark border border-cyber-border rounded-lg p-6 hover:border-cyber-accent transition-all group"
+                  className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 hover:border-green-500/50 hover:shadow-lg hover:shadow-green-500/10 transition-all group"
                 >
                   <div className="mb-4">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyber-accent transition-colors">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">
                       {project.name}
                     </h3>
-                    <span className="inline-block bg-cyber-border text-cyan-400 text-xs font-semibold px-2 py-1 rounded">
+                    <span className="inline-block bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-1 rounded-full border border-green-500/20">
                       {project.language}
                     </span>
                   </div>
 
-                  <p className="text-gray-400 text-sm mb-4">
+                  <p className="text-slate-400 text-sm mb-4">
                     {project.description}
                   </p>
 
                   <div className="mb-6">
-                    <p className="text-gray-500 text-xs font-semibold mb-2">
+                    <p className="text-slate-500 text-xs font-semibold mb-2">
                       Features:
                     </p>
                     <div className="flex flex-wrap gap-1">
                       {project.features.map((feature) => (
                         <span
                           key={feature}
-                          className="bg-cyber-border text-gray-300 text-xs px-2 py-1 rounded"
+                          className="bg-slate-700/50 text-slate-300 text-xs px-2 py-1 rounded-md"
                         >
                           {feature}
                         </span>
@@ -230,7 +230,7 @@ export default function LandingPage({
                   <div className="flex gap-2">
                     <button
                       onClick={() => onSelectProject(project.id)}
-                      className="flex-1 flex items-center justify-center gap-2 bg-cyber-accent hover:bg-cyan-400 text-black font-bold py-2 rounded transition-all"
+                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-2.5 rounded-lg transition-all shadow-lg shadow-green-500/25"
                     >
                       View Demo
                       <ArrowRight className="w-4 h-4" />
@@ -239,7 +239,7 @@ export default function LandingPage({
                       href={project.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-2 bg-cyber-border hover:bg-cyber-border/80 text-gray-300 rounded transition-all flex items-center"
+                      className="px-4 py-2.5 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 rounded-lg transition-all flex items-center border border-slate-600/50"
                     >
                       <Github className="w-4 h-4" />
                     </a>
@@ -251,8 +251,8 @@ export default function LandingPage({
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-cyber-border bg-cyber-dark">
-        <div className="container mx-auto px-4 py-8 text-center text-gray-500 text-sm">
+      <footer className="border-t border-slate-700/50 bg-slate-900/50">
+        <div className="container mx-auto px-4 py-8 text-center text-slate-500 text-sm">
           <p>Cybersecurity Projects © 2025 | wiltord</p>
           <p className="mt-2">
             All demonstrations use sample data for educational purposes

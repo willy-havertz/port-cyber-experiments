@@ -70,11 +70,11 @@ export default function TabNavigation({
   // (handled by tailwind transition and a custom class)
 
   return (
-    <div className="bg-cyber-dark py-4 relative">
+    <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 py-4 relative border-b border-slate-700/50">
       <div className="container mx-auto px-2">
         {isDropdown ? (
           <select
-            className="w-full rounded-2xl px-7 py-4 bg-cyber-dark text-lg text-cyber-accent border-2 border-cyber-accent focus:outline-none focus:ring-4 focus:ring-cyber-accent/40 shadow-lg transition-all duration-200"
+            className="w-full rounded-xl px-6 py-4 bg-slate-800 text-lg text-green-400 border-2 border-green-500/50 focus:outline-none focus:ring-4 focus:ring-green-500/30 shadow-lg transition-all duration-200"
             style={{ minHeight: 56, minWidth: 200 }}
             value={activeTab?.toString() ?? ""}
             onChange={(e) => setActiveTab(e.target.value as TabType)}
@@ -84,7 +84,7 @@ export default function TabNavigation({
               <option
                 key={tab.id ?? tab.label}
                 value={tab.id ? tab.id.toString() : ""}
-                className="bg-cyber-dark text-cyber-accent text-base py-3 px-4"
+                className="bg-slate-800 text-green-400 text-base py-3 px-4"
               >
                 {tab.label}
               </option>
@@ -93,7 +93,7 @@ export default function TabNavigation({
         ) : (
           <div className="relative">
             <button
-              className={`tab-fade tab-fade-left flex items-center justify-center bg-white/10 border border-cyber-accent rounded-full transition-all duration-200 hover:bg-cyber-accent/20 hover:scale-110 hover:border-cyber-accent/80 hover:shadow-lg hover:shadow-cyber-accent/30 hover:-translate-y-1 ${
+              className={`tab-fade tab-fade-left flex items-center justify-center bg-slate-700/50 border border-green-500/50 rounded-full transition-all duration-200 hover:bg-green-500/20 hover:scale-110 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 hover:-translate-y-1 ${
                 !showLeftFade ? "opacity-40" : ""
               }`}
               style={{ pointerEvents: "auto" }}
@@ -107,7 +107,7 @@ export default function TabNavigation({
                 }
               }}
             >
-              <ChevronLeft className="w-6 h-6 text-cyber-accent transition-colors duration-200 arrow-bounce" />
+              <ChevronLeft className="w-6 h-6 text-green-400 transition-colors duration-200 arrow-bounce" />
             </button>
             <div
               ref={scrollRef}
@@ -123,8 +123,8 @@ export default function TabNavigation({
                     onClick={() => setActiveTab(tab.id)}
                     className={`flex items-center gap-2 px-5 py-2 rounded-full font-medium whitespace-nowrap min-w-fit focus:outline-none border-2 transition-all duration-300 ${
                       isActive
-                        ? "bg-cyber-accent text-cyber-dark border-cyber-accent shadow-md tab-active-animate"
-                        : "bg-cyber-dark text-gray-300 border-gray-600 hover:bg-gray-800 hover:text-cyber-accent"
+                        ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white border-green-500 shadow-lg shadow-green-500/25 tab-active-animate"
+                        : "bg-slate-800/50 text-slate-300 border-slate-600/50 hover:bg-slate-700/50 hover:text-green-400 hover:border-green-500/50"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -134,7 +134,7 @@ export default function TabNavigation({
               })}
             </div>
             <button
-              className={`tab-fade tab-fade-right flex items-center justify-center bg-white/10 border border-cyber-accent rounded-full transition-all duration-200 hover:bg-cyber-accent/20 hover:scale-110 hover:border-cyber-accent/80 hover:shadow-lg hover:shadow-cyber-accent/30 hover:-translate-y-1 ${
+              className={`tab-fade tab-fade-right flex items-center justify-center bg-slate-700/50 border border-green-500/50 rounded-full transition-all duration-200 hover:bg-green-500/20 hover:scale-110 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 hover:-translate-y-1 ${
                 !showRightFade ? "opacity-40" : ""
               }`}
               style={{ pointerEvents: "auto" }}
@@ -148,7 +148,7 @@ export default function TabNavigation({
                 }
               }}
             >
-              <ChevronRight className="w-6 h-6 text-cyber-accent transition-colors duration-200 arrow-bounce" />
+              <ChevronRight className="w-6 h-6 text-green-400 transition-colors duration-200 arrow-bounce" />
             </button>
           </div>
         )}

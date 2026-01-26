@@ -1,12 +1,12 @@
 /* Custom styles for TabNavigation dropdown on small screens */
 .tab-dropdown {
-  background: linear-gradient(90deg, #18181b 60%, #23232b 100%);
-  color: #00ffe7;
-  border-radius: 9999px;
-  border: 2px solid #00ffe7;
+  background: linear-gradient(90deg, #0f172a 60%, #1e293b 100%);
+  color: #22c55e;
+  border-radius: 0.75rem;
+  border: 2px solid #22c55e;
   font-size: 1.15rem;
   font-weight: 500;
-  box-shadow: 0 2px 12px 0 #00ffe733;
+  box-shadow: 0 2px 12px 0 rgba(34, 197, 94, 0.2);
   padding: 1.1rem 1.5rem;
   min-height: 56px;
   min-width: 180px;
@@ -14,12 +14,12 @@
 }
 .tab-dropdown:focus {
   outline: none;
-  border-color: #ff00c8;
-  box-shadow: 0 0 0 3px #ff00c855;
+  border-color: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.3);
 }
 .tab-dropdown option {
-  color: #18181b;
-  background: #e0f7fa;
+  color: #0f172a;
+  background: #f0fdf4;
   font-size: 1rem;
   padding: 0.7rem 1rem;
 }
@@ -49,13 +49,13 @@
 }
 @keyframes color-pulse {
   0% {
-    color: #00ffe7;
+    color: #22c55e;
   }
   50% {
-    color: #ff00c8;
+    color: #4ade80;
   }
   100% {
-    color: #00ffe7;
+    color: #22c55e;
   }
 }
 .arrow-bounce {
@@ -108,11 +108,11 @@
 }
 .tab-fade-left {
   left: 0;
-  background: linear-gradient(to right, #18181b 80%, transparent);
+  background: linear-gradient(to right, #0f172a 80%, transparent);
 }
 .tab-fade-right {
   right: 0;
-  background: linear-gradient(to left, #18181b 80%, transparent);
+  background: linear-gradient(to left, #0f172a 80%, transparent);
 }
 .tab-fade:hover {
   opacity: 1;

@@ -74,34 +74,34 @@ export default function CodeReviewTab() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-white mb-2">
+      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-2">
           Secure Code Review
         </h2>
-        <p className="text-gray-400 mb-4">
+        <p className="text-slate-400 mb-4">
           Static Application Security Testing (SAST) scanner supporting multiple
           programming languages. Detects vulnerability patterns with OWASP/CWE
           mappings.
         </p>
 
         <div className="grid grid-cols-3 gap-4 mb-6 text-sm">
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Language</p>
+          <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-3">
+            <p className="text-slate-400">Language</p>
             <p className="text-white font-semibold">Python</p>
           </div>
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Coverage</p>
+          <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-3">
+            <p className="text-slate-400">Coverage</p>
             <p className="text-white font-semibold">8+ Languages</p>
           </div>
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Mappings</p>
+          <div className="bg-slate-700/50 border border-slate-600/50 rounded-xl p-3">
+            <p className="text-slate-400">Mappings</p>
             <p className="text-white font-semibold">OWASP & CWE</p>
           </div>
         </div>
 
         <div className="space-y-3 mb-4">
           <div>
-            <label className="block text-gray-400 text-sm mb-2">
+            <label className="block text-slate-400 text-sm mb-2">
               GitHub Repository URL
             </label>
             <input
@@ -109,17 +109,17 @@ export default function CodeReviewTab() {
               value={repoUrl}
               onChange={(e) => setRepoUrl(e.target.value)}
               placeholder="https://github.com/username/repo"
-              className="w-full bg-cyber-border text-white p-2 rounded border border-cyan-700 focus:outline-none focus:border-cyan-400 text-sm"
+              className="w-full bg-slate-700/50 border border-slate-600/50 text-white p-2 rounded-xl border-green-500/50 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 text-sm"
             />
           </div>
           <div>
-            <label className="block text-gray-400 text-sm mb-2">
+            <label className="block text-slate-400 text-sm mb-2">
               Primary Language
             </label>
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
-              className="w-full bg-cyber-border text-white p-2 rounded border border-cyan-700 focus:outline-none focus:border-cyan-400 text-sm"
+              className="w-full bg-slate-700/50 border border-slate-600/50 text-white p-2 rounded-xl border-green-500/50 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 text-sm"
             >
               <option>python</option>
               <option>javascript</option>
@@ -134,7 +134,7 @@ export default function CodeReviewTab() {
         <button
           onClick={handleRunReview}
           disabled={running}
-          className="flex items-center gap-2 bg-cyber-accent hover:bg-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-2 px-6 rounded transition-all"
+          className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white shadow-lg shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed font-bold py-2 px-6 rounded-xl transition-all"
         >
           <Play className="w-4 h-4" />
           {running ? "Scanning..." : "Run Scan"}
@@ -142,7 +142,7 @@ export default function CodeReviewTab() {
       </div>
 
       {error && (
-        <div className="bg-red-900/20 border border-red-700 rounded-lg p-4">
+        <div className="bg-red-900/20 border border-red-700 rounded-xl p-4">
           <p className="text-red-400 text-sm">{error}</p>
         </div>
       )}
@@ -150,29 +150,29 @@ export default function CodeReviewTab() {
       {results && scanResults && (
         <div className="space-y-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="bg-red-900/20 border border-red-700 rounded-lg p-4">
+            <div className="bg-red-900/20 border border-red-700 rounded-xl p-4">
               <p className="text-red-400 text-2xl font-bold">{criticalCount}</p>
-              <p className="text-gray-400 text-sm">Critical</p>
+              <p className="text-slate-400 text-sm">Critical</p>
             </div>
-            <div className="bg-orange-900/20 border border-orange-700 rounded-lg p-4">
+            <div className="bg-orange-900/20 border border-orange-700 rounded-xl p-4">
               <p className="text-orange-400 text-2xl font-bold">{highCount}</p>
-              <p className="text-gray-400 text-sm">High</p>
+              <p className="text-slate-400 text-sm">High</p>
             </div>
-            <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-4">
+            <div className="bg-yellow-900/20 border border-yellow-700 rounded-xl p-4">
               <p className="text-yellow-400 text-2xl font-bold">
                 {mediumCount}
               </p>
-              <p className="text-gray-400 text-sm">Medium</p>
+              <p className="text-slate-400 text-sm">Medium</p>
             </div>
-            <div className="bg-cyan-900/20 border border-cyan-700 rounded-lg p-4">
-              <p className="text-cyan-400 text-2xl font-bold">
+            <div className="bg-green-900/20 border border-green-500/50 rounded-xl p-4">
+              <p className="text-green-400 text-2xl font-bold">
                 {scanResults.vulnerabilities.length}
               </p>
-              <p className="text-gray-400 text-sm">Total Issues</p>
+              <p className="text-slate-400 text-sm">Total Issues</p>
             </div>
           </div>
 
-          <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6 space-y-4">
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 space-y-4">
             <h3 className="text-lg font-semibold text-white">
               Vulnerability Findings
             </h3>
@@ -194,7 +194,7 @@ export default function CodeReviewTab() {
                 return (
                   <div
                     key={idx}
-                    className={`${bgColor} border-l-4 rounded p-4`}
+                    className={`${bgColor} border-l-4 rounded-xl p-4`}
                   >
                     <div className="flex items-start gap-2 mb-2">
                       <AlertCircle
@@ -202,15 +202,15 @@ export default function CodeReviewTab() {
                       />
                       <div className="flex-1">
                         <p className="text-white font-semibold">{vuln.type}</p>
-                        <p className="text-gray-400 text-xs">
+                        <p className="text-slate-400 text-xs">
                           {vuln.file_path}:{vuln.line_number}
                         </p>
                       </div>
-                      <span className="text-gray-300 font-bold text-sm">
+                      <span className="text-slate-300 font-bold text-sm">
                         {vuln.severity}
                       </span>
                     </div>
-                    <p className="text-gray-300 text-sm">{vuln.description}</p>
+                    <p className="text-slate-300 text-sm">{vuln.description}</p>
                     <p className="text-gray-500 text-xs mt-1">
                       {vuln.cwe} • {vuln.remediation}
                     </p>

@@ -134,13 +134,15 @@ export default function App() {
   return (
     <>
       <ToastProvider />
-      <div className="min-h-screen bg-cyber-darker flex flex-col">
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col">
         {activeTab && <Header onBack={() => setActiveTab(null)} />}
         {activeTab && (
           <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
         )}
         <main className="flex-1">
-          <div className="tab-enter">{renderTab()}</div>
+          <div className="container mx-auto px-4 py-8">
+            <div className="tab-enter">{renderTab()}</div>
+          </div>
         </main>
 
         {activeTab && <Footer />}

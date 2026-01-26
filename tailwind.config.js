@@ -5,13 +5,14 @@ export default {
     extend: {
       colors: {
         cyber: {
-          dark: "#0a0e27",
-          darker: "#050811",
-          border: "#1e2749",
-          accent: "#00f0ff",
-          danger: "#ff0055",
-          success: "#00ff88",
-          warning: "#ffaa00",
+          dark: "#0f172a",
+          darker: "#020617",
+          border: "#1e293b",
+          accent: "#22c55e",
+          "accent-light": "#4ade80",
+          danger: "#ef4444",
+          success: "#22c55e",
+          warning: "#f59e0b",
         },
       },
     },

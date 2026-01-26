@@ -21,27 +21,27 @@ export default function IncidentResponseTab() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
-        <h2 className="text-2xl font-bold text-white mb-2">
+      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-2">
           Incident Response Orchestration
         </h2>
-        <p className="text-gray-400 mb-4">
+        <p className="text-slate-400 mb-4">
           Automated incident response playbook execution with 5-phase
           orchestration: Triage, Containment, Investigation, Remediation, and
           Recovery. Handles malware, breaches, DDoS, and ransomware scenarios.
         </p>
 
         <div className="grid grid-cols-3 gap-4 mb-6 text-sm">
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Language</p>
+          <div className="bg-slate-700/50 rounded-lg p-3 border border-slate-600/50">
+            <p className="text-slate-400">Language</p>
             <p className="text-white font-semibold">Python</p>
           </div>
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Framework</p>
+          <div className="bg-slate-700/50 rounded-lg p-3 border border-slate-600/50">
+            <p className="text-slate-400">Framework</p>
             <p className="text-white font-semibold">YAML Playbooks</p>
           </div>
-          <div className="bg-cyber-border rounded p-3">
-            <p className="text-gray-400">Phases</p>
+          <div className="bg-slate-700/50 rounded-lg p-3 border border-slate-600/50">
+            <p className="text-slate-400">Phases</p>
             <p className="text-white font-semibold">5-Phase Response</p>
           </div>
         </div>
@@ -49,7 +49,7 @@ export default function IncidentResponseTab() {
         <button
           onClick={handleRunScenario}
           disabled={running}
-          className="flex items-center gap-2 bg-cyber-accent hover:bg-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed text-black font-bold py-2 px-6 rounded transition-all"
+          className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2.5 px-6 rounded-lg transition-all shadow-lg shadow-green-500/25"
         >
           <Play className="w-4 h-4" />
           {running ? "Executing..." : "Run Demo"}
@@ -59,46 +59,46 @@ export default function IncidentResponseTab() {
       {showTimeline && (
         <div className="space-y-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
-            <div className="bg-green-900/20 border border-green-700 rounded-lg p-3 text-center">
+            <div className="bg-green-900/20 border border-green-500/50 rounded-xl p-3 text-center">
               <p className="text-green-400 font-bold">✓</p>
-              <p className="text-gray-400 text-xs">Triage</p>
+              <p className="text-slate-400 text-xs">Triage</p>
             </div>
-            <div className="bg-green-900/20 border border-green-700 rounded-lg p-3 text-center">
+            <div className="bg-green-900/20 border border-green-500/50 rounded-xl p-3 text-center">
               <p className="text-green-400 font-bold">✓</p>
-              <p className="text-gray-400 text-xs">Containment</p>
+              <p className="text-slate-400 text-xs">Containment</p>
             </div>
-            <div className="bg-green-900/20 border border-green-700 rounded-lg p-3 text-center">
+            <div className="bg-green-900/20 border border-green-500/50 rounded-xl p-3 text-center">
               <p className="text-green-400 font-bold">✓</p>
-              <p className="text-gray-400 text-xs">Investigation</p>
+              <p className="text-slate-400 text-xs">Investigation</p>
             </div>
-            <div className="bg-green-900/20 border border-green-700 rounded-lg p-3 text-center">
+            <div className="bg-green-900/20 border border-green-500/50 rounded-xl p-3 text-center">
               <p className="text-green-400 font-bold">✓</p>
-              <p className="text-gray-400 text-xs">Remediation</p>
+              <p className="text-slate-400 text-xs">Remediation</p>
             </div>
-            <div className="bg-yellow-900/20 border border-yellow-700 rounded-lg p-3 text-center">
+            <div className="bg-yellow-900/20 border border-yellow-500/50 rounded-xl p-3 text-center">
               <p className="text-yellow-400 font-bold">⟳</p>
-              <p className="text-gray-400 text-xs">Recovery</p>
+              <p className="text-slate-400 text-xs">Recovery</p>
             </div>
           </div>
 
-          <div className="bg-cyber-dark border border-cyber-border rounded-lg p-6">
+          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
             <h3 className="text-lg font-semibold text-white mb-4">
               Response Timeline
             </h3>
             <div className="space-y-3">
-              <div className="flex items-start gap-3 pb-3 border-b border-cyber-border">
-                <Clock className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
+              <div className="flex items-start gap-3 pb-3 border-b border-slate-700/50">
+                <Clock className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-400 text-xs">14:32:15 — TRIAGE</p>
+                  <p className="text-slate-400 text-xs">14:32:15 — TRIAGE</p>
                   <p className="text-white">
                     Incident detected: Suspicious login from unknown IP
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-3 pb-3 border-b border-cyber-border">
-                <Clock className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
+              <div className="flex items-start gap-3 pb-3 border-b border-slate-700/50">
+                <Clock className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-400 text-xs">
+                  <p className="text-slate-400 text-xs">
                     14:35:20 — CONTAINMENT
                   </p>
                   <p className="text-white">
@@ -106,10 +106,10 @@ export default function IncidentResponseTab() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-3 pb-3 border-b border-cyber-border">
-                <Clock className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
+              <div className="flex items-start gap-3 pb-3 border-b border-slate-700/50">
+                <Clock className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-400 text-xs">
+                  <p className="text-slate-400 text-xs">
                     14:40:12 — INVESTIGATION
                   </p>
                   <p className="text-white">
@@ -117,10 +117,10 @@ export default function IncidentResponseTab() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-start gap-3 pb-3 border-b border-cyber-border">
-                <Clock className="w-4 h-4 text-cyan-400 mt-1 flex-shrink-0" />
+              <div className="flex items-start gap-3 pb-3 border-b border-slate-700/50">
+                <Clock className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-400 text-xs">
+                  <p className="text-slate-400 text-xs">
                     14:45:15 — REMEDIATION
                   </p>
                   <p className="text-white">
@@ -132,7 +132,7 @@ export default function IncidentResponseTab() {
               <div className="flex items-start gap-3">
                 <Clock className="w-4 h-4 text-yellow-400 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-400 text-xs">14:52:30 — RECOVERY</p>
+                  <p className="text-slate-400 text-xs">14:52:30 — RECOVERY</p>
                   <p className="text-white">
                     Systems restored, monitoring enabled, post-incident review
                     pending
