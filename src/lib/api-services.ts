@@ -171,14 +171,17 @@ export async function scanNetworkTarget(
   target: string,
 ): Promise<NetworkScanResult> {
   try {
-    const response = await fetch(`${BACKEND_URL}/scanner/network-scan`, {
+    const response = await fetch(`${BACKEND_URL}/scanner/public/network-scan`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ target }),
     });
 
     if (!response.ok) {
-      throw new Error("Network scan failed");
+      const error = await response
+        .json()
+        .catch(() => ({ detail: response.statusText }));
+      throw new Error(error.detail || "Network scan failed");
     }
 
     return await response.json();
@@ -333,14 +336,17 @@ export async function analyzeCode(
   language: string = "python",
 ): Promise<CodeScanResult> {
   try {
-    const response = await fetch(`${BACKEND_URL}/scanner/code-review`, {
+    const response = await fetch(`${BACKEND_URL}/scanner/public/code-review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ repo_url: repoUrl, language }),
     });
 
     if (!response.ok) {
-      throw new Error("Code analysis failed");
+      const error = await response
+        .json()
+        .catch(() => ({ detail: response.statusText }));
+      throw new Error(error.detail || "Code analysis failed");
     }
 
     return await response.json();
@@ -416,14 +422,20 @@ export async function analyzePhishingRisk(
   email: string,
 ): Promise<PhishingAnalysis> {
   try {
-    const response = await fetch(`${BACKEND_URL}/scanner/phishing-detect`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
+    const response = await fetch(
+      `${BACKEND_URL}/scanner/public/phishing-detect`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      },
+    );
 
     if (!response.ok) {
-      throw new Error("Phishing analysis failed");
+      const error = await response
+        .json()
+        .catch(() => ({ detail: response.statusText }));
+      throw new Error(error.detail || "Phishing analysis failed");
     }
 
     return await response.json();

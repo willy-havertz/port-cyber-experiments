@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { Play, X, Plus, CheckCircle2, AlertCircle } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { toast } from "sonner";
+import { runApiAudit } from "../../lib/api";
 
 interface ApiEndpoint {
   id: string;
@@ -34,27 +43,42 @@ export default function APIAuditTab() {
     ? [
         {
           name: "Critical",
-          value: auditResults.findings?.filter((f: ApiFinding) => f.severity === "Critical").length || 0,
+          value:
+            auditResults.findings?.filter(
+              (f: ApiFinding) => f.severity === "Critical",
+            ).length || 0,
           fill: "#ff0055",
         },
         {
           name: "High",
-          value: auditResults.findings?.filter((f: ApiFinding) => f.severity === "High").length || 0,
+          value:
+            auditResults.findings?.filter(
+              (f: ApiFinding) => f.severity === "High",
+            ).length || 0,
           fill: "#ffaa00",
         },
         {
           name: "Medium",
-          value: auditResults.findings?.filter((f: ApiFinding) => f.severity === "Medium").length || 0,
+          value:
+            auditResults.findings?.filter(
+              (f: ApiFinding) => f.severity === "Medium",
+            ).length || 0,
           fill: "#00ff88",
         },
         {
           name: "Low",
-          value: auditResults.findings?.filter((f: ApiFinding) => f.severity === "Low").length || 0,
+          value:
+            auditResults.findings?.filter(
+              (f: ApiFinding) => f.severity === "Low",
+            ).length || 0,
           fill: "#0088ff",
         },
         {
           name: "Info",
-          value: auditResults.findings?.filter((f: ApiFinding) => f.severity === "Info").length || 0,
+          value:
+            auditResults.findings?.filter(
+              (f: ApiFinding) => f.severity === "Info",
+            ).length || 0,
           fill: "#888888",
         },
       ]
@@ -112,74 +136,48 @@ export default function APIAuditTab() {
     });
 
     try {
-      // Mock API audit results
-      const mockFindings: ApiFinding[] = [
-        {
-          type: "Missing Authentication",
-          severity: "High",
-          description: "Public endpoints lack API key or JWT authentication",
-          endpoint: "/",
-        },
-        {
-          type: "No Rate Limiting",
-          severity: "Medium",
-          description: "API does not implement rate limiting headers (X-RateLimit-*)",
-          endpoint: "/users",
-        },
-        {
-          type: "CORS Allow All",
-          severity: "High",
-          description: "Access-Control-Allow-Origin is set to *",
-          endpoint: "/repos",
-        },
-        {
-          type: "Verbose Error Messages",
-          severity: "Medium",
-          description: "Stack traces exposed in error responses",
-          endpoint: "/users",
-        },
-        {
-          type: "Missing HTTPS Enforcement",
-          severity: "High",
-          description: "HSTS header not set; upgrade to HTTPS only",
-          endpoint: "/",
-        },
-        {
-          type: "Excessive HTTP Methods",
-          severity: "Medium",
-          description: "DELETE method exposed on read-only endpoint",
-          endpoint: "/repos",
-        },
-        {
-          type: "No API Versioning",
-          severity: "Low",
-          description: "API lacks version in URL or headers",
-          endpoint: "/",
-        },
-        {
-          type: "Deprecated TLS",
-          severity: "High",
-          description: "TLS 1.1 or earlier detected",
-          endpoint: "/",
-        },
-      ];
+      // Call real API audit endpoint
+      const result = await runApiAudit({
+        base_url: baseUrl,
+        endpoints: endpoints.map((ep) => ({
+          path: ep.path,
+          method: ep.method,
+        })),
+      });
 
-      // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Map findings to expected format
+      const mappedFindings: ApiFinding[] = (result.findings || []).map(
+        (f: any) => ({
+          type: f.type,
+          severity:
+            f.severity === "critical"
+              ? "Critical"
+              : f.severity === "high"
+                ? "High"
+                : f.severity === "medium"
+                  ? "Medium"
+                  : f.severity === "low"
+                    ? "Low"
+                    : "Info",
+          description: f.description,
+          endpoint: f.endpoint || "/",
+        }),
+      );
 
       setAuditResults({
         base_url: baseUrl,
-        endpoints_tested: endpoints.length,
-        total_findings: mockFindings.length,
-        findings: mockFindings,
-        timestamp: new Date().toISOString(),
+        endpoints_tested: result.probes?.length || endpoints.length,
+        total_findings: mappedFindings.length,
+        findings: mappedFindings,
+        probes: result.probes,
+        timestamp: result.timestamp || new Date().toISOString(),
       });
       setResults(true);
 
       toast.dismiss(loadingToast);
       toast.success("API audit completed", {
         icon: <CheckCircle2 className="w-5 h-5" />,
-        description: `Found ${mockFindings.length} security findings across ${endpoints.length} endpoints`,
+        description: `Found ${mappedFindings.length} security findings across ${endpoints.length} endpoints`,
         duration: 4000,
       });
     } catch (err) {
@@ -231,11 +229,15 @@ export default function APIAuditTab() {
     <div className="space-y-8">
       {/* Input Section */}
       <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
-        <h2 className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-4">API Configuration</h2>
+        <h2 className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-4">
+          API Configuration
+        </h2>
 
         {/* Base URL */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-slate-300 mb-2">Base URL</label>
+          <label className="block text-sm font-medium text-slate-300 mb-2">
+            Base URL
+          </label>
           <input
             type="text"
             value={baseUrl}
@@ -244,7 +246,9 @@ export default function APIAuditTab() {
             disabled={running}
             className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 disabled:opacity-50 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none"
           />
-          <p className="text-xs text-slate-400 mt-1">Enter the API base URL to audit</p>
+          <p className="text-xs text-slate-400 mt-1">
+            Enter the API base URL to audit
+          </p>
         </div>
 
         {/* Endpoints */}
@@ -254,11 +258,16 @@ export default function APIAuditTab() {
           </label>
           <div className="space-y-2 mb-3">
             {endpoints.map((endpoint) => (
-              <div key={endpoint.id} className="flex items-center gap-2 bg-slate-700/50 p-2 rounded-xl">
+              <div
+                key={endpoint.id}
+                className="flex items-center gap-2 bg-slate-700/50 p-2 rounded-xl"
+              >
                 <span className="px-2 py-1 bg-green-500/20 text-green-300 text-xs font-mono rounded min-w-12">
                   {endpoint.method}
                 </span>
-                <span className="flex-1 text-sm text-slate-300 font-mono">{endpoint.path}</span>
+                <span className="flex-1 text-sm text-slate-300 font-mono">
+                  {endpoint.path}
+                </span>
                 <button
                   onClick={() => handleRemoveEndpoint(endpoint.id)}
                   disabled={running}
@@ -274,7 +283,9 @@ export default function APIAuditTab() {
           <div className="flex gap-2">
             <select
               value={newMethod}
-              onChange={(e) => setNewMethod(e.target.value as ApiEndpoint["method"])}
+              onChange={(e) =>
+                setNewMethod(e.target.value as ApiEndpoint["method"])
+              }
               disabled={running}
               className="px-3 py-2 bg-slate-700/50 border border-slate-600/50 rounded-xl text-white text-sm disabled:opacity-50 focus:border-green-500 focus:ring-2 focus:ring-green-500/20 outline-none"
             >
@@ -329,21 +340,33 @@ export default function APIAuditTab() {
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4">
                   <div className="text-slate-400 text-sm mb-1">Base URL</div>
-                  <div className="text-white font-mono text-sm truncate">{auditResults.base_url}</div>
+                  <div className="text-white font-mono text-sm truncate">
+                    {auditResults.base_url}
+                  </div>
                 </div>
                 <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4">
-                  <div className="text-slate-400 text-sm mb-1">Endpoints Tested</div>
-                  <div className="text-white font-bold text-2xl">{auditResults.endpoints_tested}</div>
+                  <div className="text-slate-400 text-sm mb-1">
+                    Endpoints Tested
+                  </div>
+                  <div className="text-white font-bold text-2xl">
+                    {auditResults.endpoints_tested}
+                  </div>
                 </div>
                 <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-4">
-                  <div className="text-slate-400 text-sm mb-1">Total Findings</div>
-                  <div className="text-white font-bold text-2xl">{auditResults.total_findings}</div>
+                  <div className="text-slate-400 text-sm mb-1">
+                    Total Findings
+                  </div>
+                  <div className="text-white font-bold text-2xl">
+                    {auditResults.total_findings}
+                  </div>
                 </div>
               </div>
 
               {/* Severity Chart */}
               <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Findings by Severity</h3>
+                <h3 className="text-lg font-bold text-white mb-4">
+                  Findings by Severity
+                </h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={severityData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#333" />
@@ -364,29 +387,35 @@ export default function APIAuditTab() {
 
               {/* Findings List */}
               <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
-                <h3 className="text-lg font-bold text-white mb-4">Security Findings</h3>
+                <h3 className="text-lg font-bold text-white mb-4">
+                  Security Findings
+                </h3>
                 <div className="space-y-3">
-                  {auditResults.findings.map((finding: ApiFinding, idx: number) => (
-                    <div
-                      key={idx}
-                      className={`border rounded-xl p-4 ${getSeverityColor(finding.severity)}`}
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-semibold">{finding.type}</h4>
-                        <span
-                          className={`px-2 py-1 rounded text-xs font-medium ${getSeverityBadgeColor(
-                            finding.severity
-                          )}`}
-                        >
-                          {finding.severity}
-                        </span>
+                  {auditResults.findings.map(
+                    (finding: ApiFinding, idx: number) => (
+                      <div
+                        key={idx}
+                        className={`border rounded-xl p-4 ${getSeverityColor(finding.severity)}`}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <h4 className="font-semibold">{finding.type}</h4>
+                          <span
+                            className={`px-2 py-1 rounded text-xs font-medium ${getSeverityBadgeColor(
+                              finding.severity,
+                            )}`}
+                          >
+                            {finding.severity}
+                          </span>
+                        </div>
+                        <p className="text-sm mb-2">{finding.description}</p>
+                        {finding.endpoint && (
+                          <p className="text-xs font-mono opacity-75">
+                            Endpoint: {finding.endpoint}
+                          </p>
+                        )}
                       </div>
-                      <p className="text-sm mb-2">{finding.description}</p>
-                      {finding.endpoint && (
-                        <p className="text-xs font-mono opacity-75">Endpoint: {finding.endpoint}</p>
-                      )}
-                    </div>
-                  ))}
+                    ),
+                  )}
                 </div>
               </div>
             </>
