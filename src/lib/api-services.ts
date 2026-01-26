@@ -3,7 +3,7 @@
  * Connects experiments to real cybersecurity data sources
  */
 
-const BACKEND_URL = "https://port-cyber-api.onrender.com";
+const BACKEND_URL = "https://port-cyber-backend.onrender.com/api";
 const NVD_API = "https://services.nvd.nist.gov/rest/json/cves/2.0";
 
 // ============================================================================
@@ -35,18 +35,17 @@ export interface ScanResult {
 
 export async function scanTarget(request: ScanRequest): Promise<ScanResult> {
   try {
-    const token = localStorage.getItem("scanner_token");
-    const response = await fetch(`${BACKEND_URL}/api/scanner/scan`, {
+    const response = await fetch(`${BACKEND_URL}/scanner/public/scan`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       body: JSON.stringify(request),
     });
 
     if (!response.ok) {
-      throw new Error(`Scan failed: ${response.statusText}`);
+      const error = await response.json().catch(() => ({ detail: response.statusText }));
+      throw new Error(error.detail || `Scan failed: ${response.statusText}`);
     }
 
     return await response.json();
@@ -170,7 +169,7 @@ export async function scanNetworkTarget(
   target: string
 ): Promise<NetworkScanResult> {
   try {
-    const response = await fetch(`${BACKEND_URL}/api/scanner/network-scan`, {
+    const response = await fetch(`${BACKEND_URL}/scanner/network-scan`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ target }),
@@ -332,7 +331,7 @@ export async function analyzeCode(
   language: string = "python"
 ): Promise<CodeScanResult> {
   try {
-    const response = await fetch(`${BACKEND_URL}/api/code-review/analyze`, {
+    const response = await fetch(`${BACKEND_URL}/scanner/code-review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ repo_url: repoUrl, language }),
@@ -415,7 +414,7 @@ export async function analyzePhishingRisk(
   email: string
 ): Promise<PhishingAnalysis> {
   try {
-    const response = await fetch(`${BACKEND_URL}/api/phishing/predict`, {
+    const response = await fetch(`${BACKEND_URL}/scanner/phishing-detect`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),

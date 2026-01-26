@@ -1,7 +1,7 @@
-import { Code2, ChevronLeft } from 'lucide-react'
+import { Code2, ChevronLeft } from "lucide-react";
 
 interface HeaderProps {
-  onBack?: () => void
+  onBack?: () => void;
 }
 
 export default function Header({ onBack }: HeaderProps) {
@@ -25,8 +25,10 @@ export default function Header({ onBack }: HeaderProps) {
             Cybersecurity Projects
           </h1>
         </div>
-        <p className="text-slate-400 ml-14">Live demonstrations of production-grade security tools</p>
+        <p className="text-slate-400 ml-14">
+          Live demonstrations of production-grade security tools
+        </p>
       </div>
     </header>
-  )
+  );
 }

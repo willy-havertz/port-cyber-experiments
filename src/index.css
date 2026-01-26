@@ -10,7 +10,9 @@
   padding: 1.1rem 1.5rem;
   min-height: 56px;
   min-width: 180px;
-  transition: border 0.2s, box-shadow 0.2s;
+  transition:
+    border 0.2s,
+    box-shadow 0.2s;
 }
 .tab-dropdown:focus {
   outline: none;
@@ -25,7 +27,9 @@
 }
 /* Advanced wiggle and color pulse animation for scroll arrows */
 .tab-fade:hover .arrow-bounce {
-  animation: bounce-arrow 0.4s, color-pulse 0.4s;
+  animation:
+    bounce-arrow 0.4s,
+    color-pulse 0.4s;
 }
 @keyframes bounce-arrow {
   0% {
@@ -59,7 +63,9 @@
   }
 }
 .arrow-bounce {
-  transition: transform 0.2s, color 0.2s;
+  transition:
+    transform 0.2s,
+    color 0.2s;
 }
 /* Bounce animation for scroll arrows */
 .arrow-bounce {
@@ -120,7 +126,11 @@
 
 /* Animated active tab transition */
 .tab-active-animate {
-  transition: background 0.3s, color 0.3s, box-shadow 0.3s, border 0.3s;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    box-shadow 0.3s,
+    border 0.3s;
 }
 @tailwind base;
 @tailwind components;

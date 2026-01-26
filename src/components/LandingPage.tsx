@@ -176,7 +176,10 @@ export default function LandingPage({
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-5xl font-bold text-white mb-4">
               Cybersecurity
-              <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent"> Projects</span>
+              <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
+                {" "}
+                Projects
+              </span>
             </h1>
             <p className="text-slate-400 text-lg mb-8">
               Interactive dashboards showcasing real-world security

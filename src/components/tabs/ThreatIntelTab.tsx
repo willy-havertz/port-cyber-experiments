@@ -139,7 +139,7 @@ export default function ThreatIntelTab() {
                     ? "text-orange-400"
                     : "text-yellow-400";
                 return (
-                  <div key={idx} className={\`\${bgColor} border rounded-xl p-4\`}>
+                  <div key={idx} className={`${bgColor} border rounded-xl p-4`}>
                     <div className="flex justify-between items-start mb-2">
                       <div>
                         <p className="text-white font-semibold">{cve.id}</p>
@@ -147,7 +147,7 @@ export default function ThreatIntelTab() {
                           {cve.published_date}
                         </p>
                       </div>
-                      <span className={\`\${textColor} font-bold text-sm\`}>
+                      <span className={`${textColor} font-bold text-sm`}>
                         {cve.severity}
                       </span>
                     </div>

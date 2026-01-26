@@ -9,7 +9,7 @@ export default function NetworkSecurityTab() {
   const [results, setResults] = useState(false);
   const [targetHost, setTargetHost] = useState("h4cker.org");
   const [scanResults, setScanResults] = useState<NetworkScanResult | null>(
-    null
+    null,
   );
   const [error, setError] = useState("");
 

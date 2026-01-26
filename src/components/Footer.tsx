@@ -7,32 +7,50 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-3">Projects</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li>
-                <a href="#network" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#network"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Network Security
                 </a>
               </li>
               <li>
-                <a href="#incident" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#incident"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Incident Response
                 </a>
               </li>
               <li>
-                <a href="#threat" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#threat"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Threat Intelligence
                 </a>
               </li>
               <li>
-                <a href="#code" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#code"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Code Review
                 </a>
               </li>
               <li>
-                <a href="#phishing" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#phishing"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Phishing Detection
                 </a>
               </li>
               <li>
-                <a href="#scanner" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#scanner"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Vulnerability Scanner
                 </a>
               </li>
@@ -42,22 +60,34 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-3">More</h3>
             <ul className="space-y-2 text-sm text-slate-400">
               <li>
-                <a href="#api-audit" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#api-audit"
+                  className="hover:text-green-400 transition-colors"
+                >
                   API Audit
                 </a>
               </li>
               <li>
-                <a href="#password" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#password"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Password Analyzer
                 </a>
               </li>
               <li>
-                <a href="#certificate" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#certificate"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Certificate Checker
                 </a>
               </li>
               <li>
-                <a href="#security-tools" className="hover:text-green-400 transition-colors">
+                <a
+                  href="#security-tools"
+                  className="hover:text-green-400 transition-colors"
+                >
                   Security Tools
                 </a>
               </li>
